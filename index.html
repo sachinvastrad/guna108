@@ -3,331 +3,1583 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Guna108 — Museum Wheel V5.3</title>
+<title>Guna108 — Museum Wheel &amp; Lifestyle System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+Devanagari:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--navy:#071522;--ivory:#f7f1df;--ink:#241f19;--gold:#d4af37;--rajas:#c62828;--tamas:#37474f;--purple:#7651a7;--bronze:#9a8350}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% -10%,#20456e 0,#071522 58%);font-family:Inter,system-ui,Arial,sans-serif;color:#fff}
-header{text-align:center;padding:20px;border-bottom:1px solid #ffffff18}h1{margin:0;color:#f9e27d}header p{margin:6px 0;opacity:.8}
-nav{position:sticky;top:0;z-index:10;display:flex;justify-content:center;gap:7px;flex-wrap:wrap;padding:10px;background:#06111ef2;backdrop-filter:blur(8px)}
-nav button,.toolbar button{border:1px solid #ffffff20;background:#ffffff0b;color:#fff;border-radius:10px;padding:9px 12px;font-weight:700;cursor:pointer}
-nav button.active,.primary{background:#d4af37!important;color:#332500!important}
-main{max-width:1320px;margin:auto;padding:18px}.view{display:none}.view.active{display:block}
-.grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:16px}.card{background:var(--ivory);color:var(--ink);border-radius:18px;padding:17px;box-shadow:0 18px 45px #0004}
-.dark{background:#ffffff08;border:1px solid #ffffff15;border-radius:18px;padding:12px}
-.toolbar{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:8px}input,select{padding:9px;border-radius:9px;border:1px solid #d8cba8;background:#fff}
-svg{width:100%;height:auto;display:block}.seg{cursor:pointer;transition:opacity .15s,filter .15s}.seg:hover{filter:brightness(1.18)}
-.small{font-size:12px;opacity:.72}.legend{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;padding:8px}.legend span{font-size:12px}.dot{width:11px;height:11px;border-radius:50%;display:inline-block;margin-right:4px}
-.badge{display:inline-block;padding:6px 10px;border-radius:999px;font-size:11px;font-weight:800}.quote{background:#fff3c9;padding:12px;border-left:4px solid var(--gold);border-radius:8px;margin:10px 0}.practice{background:#e8f5e9;padding:12px;border-radius:8px;margin:10px 0}
-.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.metric{padding:12px;border-radius:12px;background:#ffffff0b}.metric strong{display:block;font-size:24px;color:#f9e27d}
-.question{background:#fff;color:#222;border:1px solid #e1d5b5;border-radius:12px;padding:12px;margin:9px 0}.range{width:100%}
-table{width:100%;border-collapse:collapse;background:#fff;color:#222}th,td{padding:9px;border-bottom:1px solid #e7dcc2;text-align:left}th{background:#eee5ce}
-@media(max-width:950px){.grid{grid-template-columns:1fr}}@media(max-width:650px){main{padding:9px}.metrics{grid-template-columns:1fr}}
+:root{
+  --navy-900:#060D16; --navy-800:#0B1624; --navy-700:#112236; --navy-600:#18314F;
+  --parchment:#FBF9F1; --parchment-card:#FFFFFF;
+  --ink-900:#1A1813; --ink-700:#3C362A; --ink-500:#6E6653; --ink-light:#EDE7D3;
+  --sattva:#D4AF37; --sattva-bg:#FDF6D8; --sattva-border:#C49B27; --sattva-ink:#3A2E05;
+  --rajas:#C0392B; --rajas-bg:#FDEDEC; --rajas-border:#A93226; --rajas-ink:#4A120B;
+  --tamas:#3E5871; --tamas-bg:#EAECEE; --tamas-border:#2C3E50; --tamas-ink:#1A252F;
+  --awareness:#7A5FA8; --awareness-bg:#F4ECF7;
+  --halo:#F9E27D;
+  --line:rgba(255,255,255,0.12);
+  --direct:#2E7D32; --traditional:#C67D0A; --modern:#455A64;
+}
+
+*{box-sizing:border-box}
+html,body{
+  margin:0; padding:0;
+  background:
+    radial-gradient(ellipse 1400px 800px at 50% -10%, #1A385C 0%, transparent 65%),
+    radial-gradient(ellipse 1200px 700px at 50% 110%, #0D1E33 0%, transparent 60%),
+    var(--navy-900);
+  color:var(--ink-light);
+  font-family:'EB Garamond', Georgia, serif;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+
+h1,h2,h3,.font-display{font-family:'Cinzel', serif; letter-spacing:.02em;}
+.font-ui{font-family:'Inter', system-ui, -apple-system, sans-serif;}
+.font-sa{font-family:'Noto Serif Devanagari', serif;}
+
+/* ---------- HEADER ---------- */
+header.top{
+  text-align:center;
+  padding:32px 20px 18px;
+  border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg, rgba(17,34,54,0.6) 0%, rgba(6,13,22,0.85) 100%);
+}
+header.top .eyebrow{
+  font-family:'Inter',sans-serif;
+  letter-spacing:.32em;
+  text-transform:uppercase;
+  font-size:11px;
+  font-weight:700;
+  color:var(--sattva);
+  margin-bottom:8px;
+}
+header.top h1{
+  font-size:clamp(28px, 4.2vw, 44px);
+  font-weight:700;
+  margin:0 0 6px;
+  background:linear-gradient(180deg, #FFFDF6 0%, #F5DE88 50%, #D4AF37 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  filter:drop-shadow(0 2px 8px rgba(212,175,55,0.25));
+}
+header.top p{
+  font-style:italic;
+  color:rgba(237,231,211,0.8);
+  font-size:15px;
+  max-width:720px;
+  margin:0 auto;
+  line-height:1.5;
+}
+
+/* ---------- TABS NAV ---------- */
+nav.tabs{
+  position:sticky; top:0; z-index:40;
+  display:flex; justify-content:center; gap:6px; flex-wrap:wrap;
+  padding:12px 14px;
+  background:rgba(6,13,22,0.92);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+nav.tabs button{
+  font-family:'Inter',sans-serif; font-weight:600; font-size:13px; letter-spacing:.02em;
+  color:var(--ink-light); background:rgba(255,255,255,0.05);
+  border:1px solid var(--line); border-radius:24px;
+  padding:8px 18px; cursor:pointer; transition:all .2s ease;
+}
+nav.tabs button:hover{
+  background:rgba(255,255,255,0.12);
+  color:#fff;
+  transform:translateY(-1px);
+}
+nav.tabs button.active{
+  background:var(--sattva);
+  color:var(--sattva-ink);
+  border-color:var(--sattva);
+  font-weight:700;
+  box-shadow:0 0 16px rgba(212,175,55,0.4);
+}
+
+main{
+  max-width:1440px; margin:0 auto; padding:22px 18px 80px;
+}
+.view{ display:none;}
+.view.active{ display:block; animation:fade .3s ease;}
+@keyframes fade{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;} }
+
+.grid2{
+  display:grid;
+  grid-template-columns:minmax(0, 1.4fr) 420px;
+  gap:24px;
+  align-items:start;
+}
+@media(max-width:1100px){ .grid2{grid-template-columns:1fr;} }
+
+.panel-dark{
+  background:linear-gradient(180deg, rgba(17,34,54,0.7) 0%, rgba(11,22,36,0.9) 100%);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:20px;
+  box-shadow:0 20px 50px rgba(0,0,0,0.5);
+  position:relative;
+}
+.panel-card{
+  background:var(--parchment);
+  color:var(--ink-900);
+  border-radius:12px;
+  padding:26px 28px;
+  box-shadow:0 24px 60px rgba(0,0,0,0.45);
+  min-height:300px;
+  border:1px solid rgba(212,175,55,0.25);
+  position:sticky;
+  top:80px;
+}
+
+/* ---------- WHEEL TOOLBAR ---------- */
+.wheel-toolbar{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:14px;
+  align-items:center;
+  justify-content:space-between;
+  background:rgba(6,13,22,0.5);
+  padding:10px 14px;
+  border-radius:10px;
+  border:1px solid var(--line);
+}
+.toolbar-left, .toolbar-right{
+  display:flex; gap:8px; flex-wrap:wrap; align-items:center;
+}
+.wheel-toolbar input, .wheel-toolbar select{
+  font-family:'Inter',sans-serif; font-size:12.5px; padding:8px 12px;
+  border-radius:8px; border:1px solid var(--line);
+  background:rgba(255,255,255,0.08); color:#fff;
+  outline:none; transition:border .2s ease;
+}
+.wheel-toolbar input:focus, .wheel-toolbar select:focus{
+  border-color:var(--sattva);
+}
+.wheel-toolbar input::placeholder{ color:rgba(237,231,211,0.5);}
+.wheel-toolbar select option{ background:#112236; color:#fff;}
+.wheel-toolbar button{
+  font-family:'Inter',sans-serif; font-size:12px; font-weight:600; padding:8px 12px;
+  border-radius:8px; border:1px solid var(--line);
+  background:rgba(255,255,255,0.07); color:var(--ink-light); cursor:pointer;
+  display:inline-flex; align-items:center; gap:4px;
+  transition:all .18s ease;
+}
+.wheel-toolbar button:hover{
+  background:rgba(255,255,255,0.15); color:#fff;
+}
+.wheel-toolbar button.active{
+  background:var(--sattva); color:var(--sattva-ink); border-color:var(--sattva); font-weight:700;
+}
+
+/* ---------- SVG WHEEL CONTAINER ---------- */
+.wheel-stage{
+  position:relative;
+  width:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  border-radius:10px;
+  background:radial-gradient(circle at center, rgba(25,50,78,0.4) 0%, rgba(6,13,22,0.7) 70%);
+  padding:10px;
+}
+svg#wheelSvg{
+  width:100%;
+  max-width:880px;
+  height:auto;
+  display:block;
+  overflow:visible;
+  filter:drop-shadow(0 15px 35px rgba(0,0,0,0.6));
+  user-select:none;
+}
+
+/* ---------- SEGMENT STYLING (EMOTION WHEEL LOOK) ---------- */
+.seg{
+  cursor:pointer;
+  transition:filter .18s ease, transform .18s ease, stroke-width .18s ease;
+  vector-effect:non-scaling-stroke;
+}
+.seg:hover{
+  filter:brightness(1.15) saturate(1.1);
+  stroke:#FFFFFF !important;
+  stroke-width:2.5px !important;
+}
+.seg.active{
+  filter:brightness(1.22) drop-shadow(0 0 6px rgba(255,255,255,0.8));
+  stroke:#FFF !important;
+  stroke-width:3px !important;
+}
+
+/* Tooltip */
+.wheel-tooltip{
+  position:fixed;
+  pointer-events:none;
+  background:rgba(6, 13, 22, 0.95);
+  backdrop-filter:blur(10px);
+  color:#FFFDF6;
+  border:1px solid var(--sattva);
+  border-radius:8px;
+  padding:10px 14px;
+  font-family:'Inter', sans-serif;
+  font-size:12px;
+  box-shadow:0 12px 30px rgba(0,0,0,0.6);
+  z-index:100;
+  max-width:280px;
+  transform:translate(-50%, -120%);
+  transition:opacity .15s ease, transform .1s ease;
+  display:none;
+}
+.wheel-tooltip .tt-title{ font-weight:700; font-size:13.5px; color:var(--sattva); margin-bottom:2px;}
+.wheel-tooltip .tt-sa{ font-family:'Noto Serif Devanagari', serif; font-size:13px; color:#C39BD3; margin-bottom:4px;}
+.wheel-tooltip .tt-verse{ font-size:11px; opacity:0.8; margin-bottom:4px;}
+.wheel-tooltip .tt-meaning{ font-size:11.5px; line-height:1.4; color:rgba(255,255,255,0.9);}
+
+/* Legend & Footnotes */
+.legend{
+  display:flex; justify-content:center; gap:16px; flex-wrap:wrap;
+  padding:14px 6px 4px; font-family:'Inter',sans-serif; font-size:12px; color:rgba(237,231,211,0.85);
+}
+.legend .legend-item{
+  display:inline-flex; align-items:center; gap:6px;
+}
+.legend .dot{
+  width:12px; height:12px; border-radius:50%; display:inline-block;
+  border:1px solid rgba(0,0,0,0.3);
+}
+.footnote{
+  font-family:'Inter',sans-serif; font-size:11.5px; color:rgba(237,231,211,0.6);
+  text-align:center; margin-top:10px; line-height:1.6;
+}
+
+/* ---------- DETAIL PANEL ---------- */
+.src-badge{
+  display:inline-block; font-family:'Inter',sans-serif; font-size:10px; font-weight:700; letter-spacing:.08em;
+  text-transform:uppercase; padding:4px 10px; border-radius:20px; color:#fff; margin-bottom:6px;
+}
+.src-badge.direct_gita{ background:var(--direct);}
+.src-badge.traditional_commentary{ background:var(--traditional);}
+.src-badge.modern_application{ background:var(--modern);}
+
+.type-badge{
+  display:inline-block; font-family:'Cinzel',serif; font-size:11px; font-weight:700; letter-spacing:.14em;
+  text-transform:uppercase; padding:5px 12px; border-radius:4px; color:#fff; margin-right:8px; margin-bottom:6px;
+}
+.panel-card h2{
+  font-size:26px; margin:8px 0 2px; color:var(--ink-900); font-weight:700;
+}
+.panel-card .sa-text{
+  font-family:'Noto Serif Devanagari',serif; font-size:24px; color:#6A1B9A; margin-bottom:8px;
+}
+.panel-card .verse-line{
+  font-family:'Inter',sans-serif; font-size:12.5px; color:#5D533C; letter-spacing:.02em; margin-bottom:12px;
+}
+.panel-card .field-label{
+  font-family:'Inter',sans-serif; text-transform:uppercase; font-size:10.5px; font-weight:700;
+  letter-spacing:.14em; color:#7D7250; margin:16px 0 4px;
+}
+.panel-card .meaning{
+  font-size:16.5px; line-height:1.6; color:#2C261E; margin:0 0 10px;
+}
+.panel-card .quote-box{
+  background:rgba(212,175,55,0.12); border-left:4px solid var(--sattva-border);
+  border-radius:4px; padding:12px 16px; margin:12px 0; font-size:15px; color:#3A2E05;
+}
+.panel-card .quote-box b{
+  font-family:'Inter',sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:.1em;
+  color:#856404; display:block; margin-bottom:4px;
+}
+.panel-card .practice-box{
+  background:rgba(46,125,50,0.09); border-left:4px solid var(--direct);
+  border-radius:4px; padding:12px 16px; margin:12px 0; font-size:15px; font-style:italic; color:#1B5E20;
+}
+.panel-card .practice-box b{
+  font-family:'Inter',sans-serif; font-style:normal; font-size:11px; text-transform:uppercase; letter-spacing:.1em;
+  color:#2E7D32; display:block; margin-bottom:4px;
+}
+
+/* ---------- ASSESSMENT & CARDS ---------- */
+.metrics3{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:14px 0;}
+.metric{ padding:16px; border-radius:10px; text-align:center;}
+.metric .k{ font-family:'Inter',sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:.12em; font-weight:700; opacity:.9;}
+.metric .v{ font-family:'Cinzel',serif; font-size:32px; font-weight:700; margin-top:4px;}
+
+.question{
+  background:rgba(255,255,255,0.045); border:1px solid var(--line); border-radius:8px;
+  padding:14px 16px; margin:10px 0;
+}
+.question b{ font-weight:600; line-height:1.4; display:block; margin-bottom:8px; font-family:'Inter',sans-serif; font-size:13.5px;}
+input[type=range]{ width:100%; accent-color:var(--sattva); cursor:pointer;}
+.scale-labels{ display:flex; justify-content:space-between; font-family:'Inter',sans-serif; font-size:10.5px; color:rgba(237,231,211,0.6); margin-top:3px;}
+
+/* ---------- LIFESTYLE TABLE ---------- */
+table.lifestyle{ width:100%; border-collapse:collapse; background:rgba(255,255,255,0.03); border-radius:8px; overflow:hidden;}
+table.lifestyle th{
+  font-family:'Inter',sans-serif; text-transform:uppercase; font-size:11px; letter-spacing:.1em;
+  text-align:left; padding:12px 14px; color:var(--sattva); border-bottom:1px solid var(--line); background:rgba(0,0,0,0.25);
+}
+table.lifestyle td{ padding:14px; border-bottom:1px solid var(--line); vertical-align:middle;}
+table.lifestyle .pillar-name{ font-family:'Cinzel',serif; font-size:16px; color:#FFFDF6; font-weight:600;}
+table.lifestyle .pillar-sa{ font-family:'Inter',sans-serif; font-size:11.5px; color:rgba(237,231,211,0.7); margin-top:2px;}
+
+.mode-toggle{ display:flex; gap:8px; margin-bottom:16px;}
+.mode-toggle button{ flex:1; padding:10px; border-radius:8px; font-weight:600; cursor:pointer;}
+
+footer.foot{
+  text-align:center; font-family:'Inter',sans-serif; font-size:11.5px; color:rgba(237,231,211,0.65);
+  padding:40px 20px 10px; line-height:1.8; border-top:1px solid var(--line); margin-top:40px;
+}
+footer.foot em{ color:var(--sattva); font-style:normal;}
+
+@media(max-width:768px){
+  .wheel-toolbar{ flex-direction:column; align-items:stretch;}
+  .toolbar-left, .toolbar-right{ justify-content:center;}
+  .metrics3{ grid-template-columns:1fr;}
+}
 </style>
 </head>
+
 <body>
-<header><h1>☸ Guna108</h1><p>From Guna Awareness → Self-Awareness → Sthita-prajña</p></header>
-<nav>
-<button class="active" data-view="wheel">Museum Wheel</button>
-<button data-view="assessment">Assessment</button>
-<button data-view="mandala">My Mandala</button>
-<button data-view="conflict">Inner Conflict</button>
-<button data-view="lifestyle">Guna Lifestyle</button>
-<button data-view="ahara">Āhāra</button>
+<header class="top">
+  <div class="eyebrow">Bhagavad Gita · Chapters 2 · 3 · 6 · 14 · 17 · 18</div>
+  <h1>☸ Guna108 Museum Wheel</h1>
+  <p>From Guna Awareness → Self-Awareness → Sthita-prajña. Explore all 108 canonical elements mapped in concentric harmony around Ātman (The Witness).</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-view="wheel">Museum Wheel</button>
+  <button data-view="assessment">Assessment</button>
+  <button data-view="mandala">My Mandala</button>
+  <button data-view="conflict">Inner Conflict</button>
+  <button data-view="lifestyle">Guna Lifestyle</button>
+  <button data-view="ahara">Āhāra</button>
 </nav>
+
 <main>
 
+<!-- ============ WHEEL VIEW ============ -->
 <section id="wheel" class="view active">
-<div class="grid">
-<div class="dark">
-<div class="toolbar">
-<input id="search" placeholder="Search any element…">
-<select id="filter">
-<option value="all">All 108</option><option>Sattva</option><option>Rajas</option><option>Tamas</option>
-<option value="life">54 Life expressions</option><option value="awareness">15 Awareness stages</option>
-</select>
-<button onclick="rotate(-10)">↶ Rotate</button><button onclick="rotate(10)">Rotate ↷</button>
-<button onclick="resetWheel()">Reset</button>
-</div>
-<svg id="wheelSvg" viewBox="-330 -330 660 660" aria-label="Guna108 concentric wheel"></svg>
-<div class="legend">
-<span><i class="dot" style="background:#d4af37"></i>Sattva</span>
-<span><i class="dot" style="background:#c62828"></i>Rajas</span>
-<span><i class="dot" style="background:#37474f"></i>Tamas</span>
-<span><i class="dot" style="background:#9a8350"></i>Life</span>
-<span><i class="dot" style="background:#7651a7"></i>Awareness</span>
-</div>
-<div class="small">Canonical architecture: 3 Guna nodes + 36 qualities + 54 life expressions + 15 awareness stages = 108. Ātman is the separate center.</div>
-</div>
-<div class="card" id="detail">
-<span class="badge" style="background:#d4af37;color:#4a3500">CENTER</span>
-<h2>ĀTMAN</h2><p>Pure Witness / Consciousness</p>
-<div class="quote"><b>Design principle</b><br>The observed changes. The witness remains.</div>
-<p>Click any segment to explore it.</p>
-</div>
-</div>
+  <div class="grid2">
+    <div class="panel-dark">
+      <div class="wheel-toolbar">
+        <div class="toolbar-left">
+          <input id="search" class="font-ui" placeholder="🔍 Search any of the 108 elements…">
+          <select id="filter" class="font-ui">
+            <option value="all">All 108 Elements</option>
+            <option value="Sattva">Sattva (Goodness/Clarity)</option>
+            <option value="Rajas">Rajas (Passion/Action)</option>
+            <option value="Tamas">Tamas (Darkness/Inertia)</option>
+            <option value="guna">3 Guṇa Roots</option>
+            <option value="quality">36 Guṇa Qualities</option>
+            <option value="life">54 Life Expressions</option>
+            <option value="awareness">15 Awareness Elements</option>
+          </select>
+        </div>
+        <div class="toolbar-right">
+          <button id="langToggle" onclick="toggleLanguage()" title="Toggle Language on Wheel">🔤 <span id="langLabel">English</span></button>
+          <button onclick="rotateWheel(-15)" title="Rotate Left">↶ 15°</button>
+          <button onclick="rotateWheel(15)" title="Rotate Right">15° ↷</button>
+          <button onclick="zoomWheel(1.15)" title="Zoom In">🔍 +</button>
+          <button onclick="zoomWheel(0.87)" title="Zoom Out">🔍 −</button>
+          <button onclick="resetWheel()" title="Reset View">Reset</button>
+        </div>
+      </div>
+
+      <div class="wheel-stage" id="wheelStage">
+        <svg id="wheelSvg" viewBox="-500 -500 1000 1000" aria-label="Guna108 Concentric Museum Wheel"></svg>
+      </div>
+
+      <div class="legend">
+        <span class="legend-item"><i class="dot" style="background:#F4D03F"></i><b>Sattva</b> (Clarity/Harmony)</span>
+        <span class="legend-item"><i class="dot" style="background:#E74C3C"></i><b>Rajas</b> (Drive/Attachment)</span>
+        <span class="legend-item"><i class="dot" style="background:#546E7A"></i><b>Tamas</b> (Inertia/Delusion)</span>
+        <span class="legend-item"><i class="dot" style="background:#D5D8DC"></i><b>Life Expressions</b> (54)</span>
+        <span class="legend-item"><i class="dot" style="background:#9C27B0"></i><b>Awareness Path</b> (15)</span>
+        <span class="legend-item"><i class="dot" style="background:#F9E27D; border-style:dashed;"></i><b>Guṇātīta Halo</b></span>
+      </div>
+      <div class="footnote">
+        <b>Canonical 108 Architecture:</b> 3 Guṇas + 36 Qualities + 54 Life Expressions + 15 Awareness Elements = 108. Ātman is the separate center. Hover or tap any wedge to view its Sanskrit root, Gita verse citation, and daily reflection practice.
+      </div>
+    </div>
+
+    <!-- Detail Panel -->
+    <div class="panel-card" id="detail">
+      <span class="type-badge" style="background:#2E7D32">CENTER MEDALLION</span>
+      <h2>Ātman</h2>
+      <div class="sa-text">आत्मन्</div>
+      <div class="verse-line">BG 2.55 · 13.31–32 · 14.19–20 &nbsp;·&nbsp; <span class="src-badge direct_gita">Direct Gita Teaching</span></div>
+      <div class="field-label">The Witness Consciousness</div>
+      <p class="meaning">Pure consciousness, the eternal Witness. One who sees the guṇas as the sole active agents in nature, and knows the Self as transcendental to them, attains the Divine nature.</p>
+      <div class="quote-box"><b>Core Principle</b>The observed changes. The witness remains untouched.</div>
+      <div class="practice-box"><b>Practice</b>Notice the quiet awareness that is aware of thoughts, moods, and desires — that noticing was never sattvic, rajasic, or tamasic.</div>
+      <p class="meaning" style="margin-top:16px; font-size:14px; color:#6B6046; font-style:italic;">
+        Tap any segment on the sunburst wheel to explore its Gita verses, psychological meaning, and contemplation practice.
+      </p>
+    </div>
+  </div>
 </section>
 
+<!-- ============ ASSESSMENT VIEW ============ -->
 <section id="assessment" class="view">
-<div class="card">
-<h2>36-Question Self-Awareness Assessment</h2>
-<p>Rate each statement from 1 (rarely) to 5 (very often). This describes current response patterns; it does not define your identity.</p>
-<div id="questions"></div>
-<button class="primary" onclick="calculate()">Generate Personalized Mandala</button>
-<div id="assessmentResult" style="margin-top:14px"></div>
-</div>
+  <div class="panel-dark" style="max-width:960px; margin:0 auto;">
+    <h2 style="margin-top:0; font-size:28px;">36-Question Self-Awareness Assessment</h2>
+    <p style="color:rgba(237,231,211,0.8); font-style:italic; font-size:15px;">
+      Rate each statement from 1 (rarely) to 5 (very often). This measures your <em>current response pattern</em> — it is not a fixed label or moral grade.
+    </p>
+    <div id="questions"></div>
+    <button class="font-ui" style="margin-top:14px; padding:14px 28px; font-size:14px; font-weight:700; background:var(--sattva); color:var(--sattva-ink); border:none; border-radius:8px; cursor:pointer;" onclick="calculate()">
+      Generate My Personalized Mandala ➔
+    </button>
+    <div id="assessmentResult" style="margin-top:20px;"></div>
+  </div>
 </section>
 
+<!-- ============ MANDALA VIEW ============ -->
 <section id="mandala" class="view">
-<div class="grid">
-<div class="dark"><svg id="mandalaSvg" viewBox="-330 -330 660 660"></svg></div>
-<div class="card" id="mandalaInfo"><h2>Personalized Guna Mandala</h2><p>Complete the 36-question assessment.</p></div>
-</div>
+  <div class="grid2">
+    <div class="panel-dark">
+      <h2 style="margin-top:0; font-size:22px; text-align:center;">Your Current Guṇa Mandala</h2>
+      <svg id="mandalaSvg" viewBox="-360 -360 720 720" style="width:100%; max-width:640px; margin:0 auto; display:block;"></svg>
+    </div>
+    <div class="panel-card" id="mandalaInfo">
+      <span class="type-badge" style="background:#5A6B8C">PERSONAL MANDALA</span>
+      <h2>Your Guna Mandala</h2>
+      <p class="meaning">Complete the 36-question assessment to see your dynamic energy pattern visualized here. The 54 life expressions and 15 awareness elements provide the outer structural framework.</p>
+    </div>
+  </div>
 </section>
 
+<!-- ============ CONFLICT VIEW ============ -->
 <section id="conflict" class="view">
-<div class="card"><h2>Inner Conflict Engine</h2><p>Observe the competing tendencies without turning them into identity.</p>
-<div id="conflictBox" class="quote">Complete the assessment first.</div>
-</div>
+  <div class="panel-dark" style="max-width:880px; margin:0 auto;">
+    <h2 style="margin-top:0; font-size:26px;">Inner Conflict Engine</h2>
+    <p style="color:rgba(237,231,211,0.8); font-style:italic;">
+      The guṇas continually compete for dominance within the mind (BG 14.10). This engine maps the forces currently pulling on your attention so you can respond with discernment (Viveka).
+    </p>
+    <div id="conflictBox" class="quote-box" style="background:rgba(255,255,255,0.05); color:#fff; border-left:4px solid var(--sattva);">
+      Complete the 36-question assessment first to discover your current inner conflict pattern.
+    </div>
+  </div>
 </section>
 
+<!-- ============ LIFESTYLE VIEW ============ -->
 <section id="lifestyle" class="view">
-<div class="card">
-<h2>Guna Lifestyle System</h2>
-<p>Six practical reflection pillars inspired by Gita themes. This exact six-pillar taxonomy is a product framework, not a direct Gita quotation.</p>
-<table><thead><tr><th>Pillar</th><th>Daily reflection</th><th>1–5</th></tr></thead><tbody>
-<tr><td><b>Āhāra</b><br>Food & Eating</td><td>Did my food support nourishment, clarity and awareness?</td><td><input type="range" min="1" max="5"></td></tr>
-<tr><td><b>Śarīra</b><br>Body & Discipline</td><td>Did I care for the body with steadiness?</td><td><input type="range" min="1" max="5"></td></tr>
-<tr><td><b>Vāk</b><br>Speech</td><td>Was my speech truthful, beneficial and restrained?</td><td><input type="range" min="1" max="5"></td></tr>
-<tr><td><b>Manas</b><br>Mind</td><td>Did I notice thoughts before reacting?</td><td><input type="range" min="1" max="5"></td></tr>
-<tr><td><b>Karma</b><br>Action</td><td>Did I act sincerely without unhealthy result-attachment?</td><td><input type="range" min="1" max="5"></td></tr>
-<tr><td><b>Dharma / Seva</b><br>Duty & Service</td><td>Did I fulfill duty and serve consciously?</td><td><input type="range" min="1" max="5"></td></tr>
-</tbody></table>
-</div>
+  <div class="panel-dark" style="max-width:1040px; margin:0 auto;">
+    <h2 style="margin-top:0; font-size:26px;">Guna Lifestyle System</h2>
+    <p style="color:rgba(237,231,211,0.8); font-style:italic;">
+      Six practical reflection pillars inspired by Bhagavad Gita teachings. This six-pillar structure is an actionable product framework for daily living.
+    </p>
+    <table class="lifestyle">
+      <thead>
+        <tr><th>Pillar</th><th>Daily Reflection Inquiry</th><th style="width:180px;">Today's Rating (1–5)</th></tr>
+      </thead>
+      <tbody id="lifestyleBody"></tbody>
+    </table>
+    <button class="font-ui" style="margin-top:20px; padding:14px 26px; font-size:14px; font-weight:700; background:var(--sattva); color:var(--sattva-ink); border:none; border-radius:8px; cursor:pointer;" onclick="saveLifestyle()">
+      Save Today's Check-in
+    </button>
+    <div id="lifestyleResult" style="margin-top:16px;"></div>
+  </div>
 </section>
 
+<!-- ============ AHARA VIEW ============ -->
 <section id="ahara" class="view">
-<div class="card">
-<h2>Āhāra — Gita Food & Habit Module</h2>
-<p><b>Gita-only mode:</b> uses the food qualities in BG 17.7–10. It does not invent calorie, macro or medical prescriptions.</p>
-<div class="metrics">
-<div class="metric" style="background:#f0dc85;color:#4a3500"><b>Sattvic</b><strong>17.8</strong>Nourishing / vital / pleasing</div>
-<div class="metric" style="background:#c62828"><b>Rajasic</b><strong>17.9</strong>Excessively stimulating</div>
-<div class="metric" style="background:#37474f"><b>Tamasic</b><strong>17.10</strong>Stale / depleted / impure</div>
-</div>
-<h3>Meal reflection</h3>
-<div class="question">Freshness <input class="range" id="fresh" type="range" min="1" max="5" value="4"></div>
-<div class="question">Nourishment <input class="range" id="nour" type="range" min="1" max="5" value="4"></div>
-<div class="question">Intensity <input class="range" id="intense" type="range" min="1" max="5" value="2"></div>
-<div class="question">Awareness <input class="range" id="aware" type="range" min="1" max="5" value="4"></div>
-<button class="primary" onclick="saveMeal()">Save Āhāra Reflection</button>
-<div id="mealResult" class="practice"></div>
-<p class="small">Specific modern foods beyond the explicit Gita qualities must be labeled separately as traditional interpretation or modern nutrition.</p>
-</div>
+  <div class="panel-dark" style="max-width:960px; margin:0 auto;">
+    <h2 style="margin-top:0; font-size:26px;">Āhāra — Gita Food &amp; Habit Module</h2>
+    <div class="mode-toggle">
+      <button class="mode-btn active font-ui" data-mode="gita" onclick="setAharaMode('gita')">Gita Only (BG 17.7–10)</button>
+      <button class="mode-btn font-ui" data-mode="traditional" onclick="setAharaMode('traditional')">Traditional Interpretation</button>
+      <button class="mode-btn font-ui" data-mode="modern" onclick="setAharaMode('modern')">Modern Nutrition Guidance</button>
+    </div>
+    <div id="aharaModeContent"></div>
+
+    <h3 style="margin-top:30px; font-size:20px;">Daily Meal Reflection</h3>
+    <p style="color:rgba(237,231,211,0.75); font-style:italic; font-size:14px;">
+      This is a conscious self-reflection practice, not a medical or dietetic diagnostic.
+    </p>
+    <div class="question"><b>Freshness (Āyus / Prāṇa)</b><input class="range" id="fresh" type="range" min="1" max="5" value="4">
+      <div class="scale-labels"><span>Stale / Leftover (1)</span><span>Very Fresh / Vital (5)</span></div></div>
+    <div class="question"><b>Nourishment (Balavardhana)</b><input class="range" id="nour" type="range" min="1" max="5" value="4">
+      <div class="scale-labels"><span>Depleting (1)</span><span>Deeply Wholesome &amp; Juicy (5)</span></div></div>
+    <div class="question"><b>Intensity (Tikṣṇa / Rūkṣa)</b><input class="range" id="intense" type="range" min="1" max="5" value="2">
+      <div class="scale-labels"><span>Mild / Balanced (1)</span><span>Excessive Heat / Salt / Spice (5)</span></div></div>
+    <div class="question"><b>Awareness while Eating</b><input class="range" id="aware" type="range" min="1" max="5" value="4">
+      <div class="scale-labels"><span>Distracted / Hurried (1)</span><span>Fully Present &amp; Mindful (5)</span></div></div>
+    <div class="question"><b>Primary Motivation for Meal:</b>
+      <select id="motivation" class="font-ui" style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--line); background:#112236; color:#fff; margin-top:6px;">
+        <option value="hunger">Physical Hunger (True bodily need)</option>
+        <option value="emotion">Emotional Craving (Stress / Comfort)</option>
+        <option value="habit">Habit / Clock Schedule</option>
+        <option value="celebration">Social / Celebration</option>
+      </select>
+    </div>
+    <button class="font-ui" style="margin-top:10px; padding:12px 24px; font-size:13.5px; font-weight:700; background:var(--sattva); color:var(--sattva-ink); border:none; border-radius:8px; cursor:pointer;" onclick="saveMeal()">
+      Save Āhāra Reflection
+    </button>
+    <div id="mealResult" class="practice-box" style="display:none; margin-top:16px; font-style:normal;"></div>
+    <p class="footnote" style="text-align:left; margin-top:20px;">
+      Specific modern foods beyond explicit qualities in BG 17.7–10 are labeled separately as traditional commentary or modern nutrition — never represented as direct scripture.
+    </p>
+  </div>
 </section>
+
 </main>
 
+<!-- Floating Tooltip for Wheel -->
+<div id="wheelTooltip" class="wheel-tooltip">
+  <div class="tt-title" id="ttTitle"></div>
+  <div class="tt-sa" id="ttSa"></div>
+  <div class="tt-verse" id="ttVerse"></div>
+  <div class="tt-meaning" id="ttMeaning"></div>
+</div>
+
+<footer class="foot">
+  Content grounded in <em>Bhagavad Gita</em> — Chapters 2 (Sthita-prajña), 3 (Karma Yoga), 6 (Dhyāna), 14 (Guṇa-traya-vibhāga), 17 (Śraddhā-traya-vibhāga) &amp; 18 (Mokṣa-sannyāsa). Every element is labeled by source type: <b style="color:#81C784">Direct Gita</b>, <b style="color:#FFD54F">Traditional Commentary</b>, or <b style="color:#90CAF9">Modern Application</b>.<br/>
+  Guna108 · Museum Wheel &amp; Lifestyle System · v6.0 Canonical Edition
+</footer>
+
+<script id="data-json" type="application/json">
+{
+  "atman": {
+    "id": "G000",
+    "english": "Ātman",
+    "sanskrit": "आत्मन्",
+    "translit": "Ātman",
+    "verse": "BG 2.55, 13.31–32, 14.19–20",
+    "sourceType": "direct_gita",
+    "meaning": "Pure consciousness, the eternal Witness. One who sees the guṇas as the sole actors in nature and knows the Self as transcendental attains Divine nature.",
+    "practice": "Notice the quiet awareness that observes thoughts and sensations — that noticing itself was never bound by any guṇa."
+  },
+  "elements": [
+    {"id": "G001", "ring": "guna", "guna": "Sattva", "english": "Sattva", "sanskrit": "सत्त्व", "translit": "Sattva", "verse": "BG 14.6", "sourceType": "direct_gita", "meaning": "Purer than the other modes; illuminating, freeing from suffering — yet binds through attachment to happiness and knowledge.", "practice": "Observe where Sattva operates today — is it true clarity, or subtle pride in being virtuous?"},
+    {"id": "G002", "ring": "guna", "guna": "Rajas", "english": "Rajas", "sanskrit": "रजस्", "translit": "Rajas", "verse": "BG 14.7", "sourceType": "direct_gita", "meaning": "Born of passionate desire and longing; binds the embodied soul through attachment to fruitive action and restless strivings.", "practice": "Notice an urge to act today, and gently inquire what outcome you are privately clinging to."},
+    {"id": "G003", "ring": "guna", "guna": "Tamas", "english": "Tamas", "sanskrit": "तमस्", "translit": "Tamas", "verse": "BG 14.8", "sourceType": "direct_gita", "meaning": "Born of ignorance, causing delusion in all beings; binds through heedlessness, lethargy, procrastination, and excessive sleep.", "practice": "Where today did you choose numbness or delay over meeting something with clear attention?"},
+
+    {"id": "G004", "ring": "quality", "guna": "Sattva", "english": "Clarity", "sanskrit": "प्रकाश", "translit": "Prakāśa", "verse": "BG 14.11", "sourceType": "direct_gita", "meaning": "When knowledge illuminates every gate of the body, Sattva is predominant.", "practice": "Spend five quiet minutes in stillness before taking your major decision today."},
+    {"id": "G005", "ring": "quality", "guna": "Sattva", "english": "Wisdom", "sanskrit": "प्रज्ञा", "translit": "Prajñā", "verse": "BG 2.57–58", "sourceType": "direct_gita", "meaning": "Knowledge matured into steady understanding, not shaken by misfortune or elated by gain.", "practice": "Ask what a wiser, future version of yourself would do in this exact situation."},
+    {"id": "G006", "ring": "quality", "guna": "Sattva", "english": "Peace", "sanskrit": "शान्ति", "translit": "Śānti", "verse": "BG 2.66", "sourceType": "direct_gita", "meaning": "The serene stillness arising from a steady mind aligned with truth.", "practice": "Distinguish between peacefulness born of avoidance versus peacefulness born of understanding."},
+    {"id": "G007", "ring": "quality", "guna": "Sattva", "english": "Truthfulness", "sanskrit": "सत्य", "translit": "Satya", "verse": "BG 17.15", "sourceType": "direct_gita", "meaning": "Speech that is truthful, beneficial, non-agitating, and pleasing.", "practice": "Before speaking, ask: Is it true? Is it beneficial? Is it spoken with kindness?"},
+    {"id": "G008", "ring": "quality", "guna": "Sattva", "english": "Compassion", "sanskrit": "करुणा", "translit": "Karuṇā", "verse": "BG 12.13", "sourceType": "direct_gita", "meaning": "Universal friendliness and compassion, free from malice toward any creature.", "practice": "Perform an act of quiet help today without seeking recognition or gratitude."},
+    {"id": "G009", "ring": "quality", "guna": "Sattva", "english": "Gratitude", "sanskrit": "कृतज्ञता", "translit": "Kṛtajñatā", "verse": "BG 16.1–3", "sourceType": "traditional_commentary", "meaning": "Contentment acknowledging that the essential gifts of life are already present.", "practice": "Name three blessings right now that you did not earn or create yourself."},
+    {"id": "G010", "ring": "quality", "guna": "Sattva", "english": "Humility", "sanskrit": "नम्रता", "translit": "Amānitvam", "verse": "BG 13.8", "sourceType": "direct_gita", "meaning": "Freedom from arrogance and the need for honor from others.", "practice": "Allow someone else to take credit or be right in a conversation today."},
+    {"id": "G011", "ring": "quality", "guna": "Sattva", "english": "Patience", "sanskrit": "धैर्य", "translit": "Dhṛti", "verse": "BG 18.33", "sourceType": "direct_gita", "meaning": "Unswerving fortitude that sustains the mind and senses through practice.", "practice": "Let one delayed circumstance unfold at its own natural pace without agitation."},
+    {"id": "G012", "ring": "quality", "guna": "Sattva", "english": "Contentment", "sanskrit": "सन्तोष", "translit": "Santoṣa", "verse": "BG 12.19", "sourceType": "direct_gita", "meaning": "Satisfied with whatever comes by natural course, steady in mind.", "practice": "Notice something you possess right now that you once desperately prayed for."},
+    {"id": "G013", "ring": "quality", "guna": "Sattva", "english": "Devotion", "sanskrit": "भक्ति", "translit": "Bhakti", "verse": "BG 14.26", "sourceType": "direct_gita", "meaning": "Unwavering devotional service that transcends all three gunas.", "practice": "Dedicate today's labor as an offering to the Divine rather than personal ego."},
+    {"id": "G014", "ring": "quality", "guna": "Sattva", "english": "Forgiveness", "sanskrit": "क्षमा", "translit": "Kṣamā", "verse": "BG 16.3", "sourceType": "direct_gita", "meaning": "The divine strength to release resentment without harboring hidden grudges.", "practice": "Privately release an old injury you have carried, freeing your own heart."},
+    {"id": "G015", "ring": "quality", "guna": "Sattva", "english": "Self-discipline", "sanskrit": "आत्मसंयम", "translit": "Ātma-saṁyama", "verse": "BG 6.35–36", "sourceType": "direct_gita", "meaning": "Mastery of the mind cultivated through consistent abhyāsa and vairāgya.", "practice": "Complete one essential commitment today without negotiation or delay."},
+
+    {"id": "G016", "ring": "quality", "guna": "Rajas", "english": "Desire", "sanskrit": "काम", "translit": "Kāma", "verse": "BG 14.7", "sourceType": "direct_gita", "meaning": "Insatiable thirst and longing that binds the soul to endless action.", "practice": "When a sharp desire arises, watch it without immediately gratifying it."},
+    {"id": "G017", "ring": "quality", "guna": "Rajas", "english": "Ambition", "sanskrit": "स्पृहा", "translit": "Spṛhā", "verse": "BG 14.12", "sourceType": "direct_gita", "meaning": "Intense craving to expand achievements and conquer new frontiers.", "practice": "Inquire: Would you still chase this goal if nobody ever knew about it?"},
+    {"id": "G018", "ring": "quality", "guna": "Rajas", "english": "Achievement", "sanskrit": "आरम्भ", "translit": "Ārambha", "verse": "BG 14.12", "sourceType": "direct_gita", "meaning": "Constant initiation of strenuous enterprises for personal fruit.", "practice": "Bring one unfinished task to completion instead of initiating three new ones."},
+    {"id": "G019", "ring": "quality", "guna": "Rajas", "english": "Competition", "sanskrit": "स्पर्धा", "translit": "Spardhā", "verse": "BG 16.14–15", "sourceType": "direct_gita", "meaning": "Measuring worth through comparison, rivalry, and triumph over others.", "practice": "Notice when you compare your progress to another, and return to your duty."},
+    {"id": "G020", "ring": "quality", "guna": "Rajas", "english": "Recognition", "sanskrit": "प्रतिष्ठा", "translit": "Mānāpāna", "verse": "BG 17.18", "sourceType": "direct_gita", "meaning": "Endeavor undertaken for ostentation, respect, applause, and prestige.", "practice": "Perform a noble act today and deliberately ensure nobody learns it was you."},
+    {"id": "G021", "ring": "quality", "guna": "Rajas", "english": "Restlessness", "sanskrit": "चञ्चलता", "translit": "Cañcalatvam", "verse": "BG 6.34", "sourceType": "direct_gita", "meaning": "The turbulent, unsteady nature of the mind driven by rajasic winds.", "practice": "Sit still for three uninterrupted minutes doing nothing between tasks."},
+    {"id": "G022", "ring": "quality", "guna": "Rajas", "english": "Attachment", "sanskrit": "सङ्ग", "translit": "Saṅga", "verse": "BG 2.62", "sourceType": "direct_gita", "meaning": "Clinging to sense objects and outcomes, leading to anxiety and desire.", "practice": "Do your next assignment with full skill, then mentally release the result."},
+    {"id": "G023", "ring": "quality", "guna": "Rajas", "english": "Possessiveness", "sanskrit": "परिग्रह", "translit": "Parigraha", "verse": "BG 18.53", "sourceType": "direct_gita", "meaning": "The compulsive urge to hoard and control people, assets, or status.", "practice": "Gift or donate something of value that you hold out of mere attachment."},
+    {"id": "G024", "ring": "quality", "guna": "Rajas", "english": "Ego", "sanskrit": "अहङ्कार", "translit": "Ahaṅkāra", "verse": "BG 3.27, 18.24", "sourceType": "direct_gita", "meaning": "The deluded belief: 'I am the sole doer of this accomplishment.'", "practice": "Acknowledge the unseen factors and contributors behind your latest success."},
+    {"id": "G025", "ring": "quality", "guna": "Rajas", "english": "Anxiety", "sanskrit": "चिन्ता", "translit": "Cintā", "verse": "BG 16.11", "sourceType": "direct_gita", "meaning": "Bound by hundreds of expectations, consumed by worry over future fruits.", "practice": "Write down your specific fear, and recognize what is beyond your control."},
+    {"id": "G026", "ring": "quality", "guna": "Rajas", "english": "Impulsiveness", "sanskrit": "आवेग", "translit": "Āvega", "verse": "BG 14.12", "sourceType": "direct_gita", "meaning": "Feverish urges that bypass Viveka and rush headlong into reaction.", "practice": "Insert a 60-second breathing pause between an emotional trigger and your response."},
+    {"id": "G027", "ring": "quality", "guna": "Rajas", "english": "Overactivity", "sanskrit": "अतिप्रवृत्ति", "translit": "Atipravṛtti", "verse": "BG 14.12", "sourceType": "direct_gita", "meaning": "Hyperactive motion for its own sake, running away from inner silence.", "practice": "Take a mindful walk today without phone, headphones, or destinations."},
+
+    {"id": "G028", "ring": "quality", "guna": "Tamas", "english": "Ignorance", "sanskrit": "अज्ञान", "translit": "Ajñāna", "verse": "BG 14.8", "sourceType": "direct_gita", "meaning": "The darkness that obscures truth and covers discrimination in all beings.", "practice": "Confront one difficult reality you have avoided examining honestly."},
+    {"id": "G029", "ring": "quality", "guna": "Tamas", "english": "Confusion", "sanskrit": "मोह", "translit": "Moha", "verse": "BG 14.13", "sourceType": "direct_gita", "meaning": "Bewilderment where wrong appears right and right appears wrong.", "practice": "Write down the dilemma confusing you — naming its roots brings clarity."},
+    {"id": "G030", "ring": "quality", "guna": "Tamas", "english": "Inertia", "sanskrit": "अप्रवृत्ति", "translit": "Apravṛtti", "verse": "BG 14.13", "sourceType": "direct_gita", "meaning": "Paralyzing resistance to starting right action, distinct from true rest.", "practice": "Take the smallest physical first step on a project you feel blocked on."},
+    {"id": "G031", "ring": "quality", "guna": "Tamas", "english": "Laziness", "sanskrit": "आलस्य", "translit": "Ālasya", "verse": "BG 14.8", "sourceType": "direct_gita", "meaning": "Sluggish indifference where duty is perpetually postponed.", "practice": "Count down 3-2-1 and immediately stand up to do your first duty."},
+    {"id": "G032", "ring": "quality", "guna": "Tamas", "english": "Excessive sleep", "sanskrit": "निद्रा", "translit": "Nidrā (Atirikta)", "verse": "BG 14.8", "sourceType": "direct_gita", "meaning": "Using sleep or lethargy as a psychological escape from responsibility.", "practice": "Observe whether sleep is serving genuine rejuvenation or escape."},
+    {"id": "G033", "ring": "quality", "guna": "Tamas", "english": "Procrastination", "sanskrit": "दीर्घसूत्रता", "translit": "Dīrgha-sūtratā", "verse": "BG 18.28", "sourceType": "direct_gita", "meaning": "Taking months to do what could be done in days — a direct mark of Tamas.", "practice": "Complete the oldest delayed item on your list in the next 30 minutes."},
+    {"id": "G034", "ring": "quality", "guna": "Tamas", "english": "Neglect", "sanskrit": "प्रमाद", "translit": "Pramāda", "verse": "BG 14.13", "sourceType": "direct_gita", "meaning": "Careless inattention and heedlessness toward vital duties and relationships.", "practice": "Give 10 minutes of undivided, focused care to a neglected obligation."},
+    {"id": "G035", "ring": "quality", "guna": "Tamas", "english": "Apathy", "sanskrit": "उदासीनता", "translit": "Jaḍatā", "verse": "BG 14.13", "sourceType": "traditional_commentary", "meaning": "Numb indifference mimicking equanimity while masking total disengagement.", "practice": "Identify one noble cause you would care deeply about if fear vanished."},
+    {"id": "G036", "ring": "quality", "guna": "Tamas", "english": "Delusion", "sanskrit": "विपरीतबुद्धि", "translit": "Viparīta-buddhi", "verse": "BG 18.32", "sourceType": "direct_gita", "meaning": "Tamasic intellect that perceives adharma as dharma under illusion.", "practice": "Test an old assumption with an open, inquiring mind today."},
+    {"id": "G037", "ring": "quality", "guna": "Tamas", "english": "Fear-driven avoidance", "sanskrit": "भयमूल त्याग", "translit": "Bhaya-tyāga", "verse": "BG 18.35", "sourceType": "direct_gita", "meaning": "Stubborn determination clinging to grief, despair, and fear as permanent walls.", "practice": "Name the hidden fear plainly out loud so it loses its shadow power."},
+    {"id": "G038", "ring": "quality", "guna": "Tamas", "english": "Destructive anger", "sanskrit": "क्रोध", "translit": "Krodha", "verse": "BG 16.21", "sourceType": "direct_gita", "meaning": "Blinding rage that destroys memory, intellect, and self-possession.", "practice": "Step away and breathe deeply before responding to whatever triggered you."},
+    {"id": "G039", "ring": "quality", "guna": "Tamas", "english": "Unconscious habit", "sanskrit": "संस्कारजडता", "translit": "Saṁskāra-jaḍatā", "verse": "BG 3.27", "sourceType": "traditional_commentary", "meaning": "Autopilot reactivity dictated by past conditioning without conscious choice.", "practice": "Execute an everyday routine task with 100% conscious presence."},
+
+    {"id": "G040", "ring": "life", "domain": "Āhāra — Food & Eating", "english": "Food quality", "sanskrit": "आहारगुण", "verse": "BG 17.8–10", "sourceType": "direct_gita", "meaning": "Classification of food into nourishing, stimulating, or decaying qualities.", "practice": "Observe whether your meal increases vitality or heaviness."},
+    {"id": "G041", "ring": "life", "domain": "Āhāra — Food & Eating", "english": "Freshness", "sanskrit": "सद्यस्कता", "verse": "BG 17.8, 17.10", "sourceType": "direct_gita", "meaning": "Fresh, juicy ingredients versus stale, processed, or decomposed items.", "practice": "Choose fresh whole foods over heavily preserved alternatives."},
+    {"id": "G042", "ring": "life", "domain": "Āhāra — Food & Eating", "english": "Nourishment", "sanskrit": "बलपुष्टि", "verse": "BG 17.8", "sourceType": "direct_gita", "meaning": "Foods promoting long life, strength, health, happiness, and satisfaction.", "practice": "Eat to nourish bodily vitality rather than to quell boredom."},
+    {"id": "G043", "ring": "life", "domain": "Āhāra — Food & Eating", "english": "Intensity", "sanskrit": "तीक्ष्णाहार", "verse": "BG 17.9", "sourceType": "direct_gita", "meaning": "Excessively bitter, sour, salty, hot, pungent, or burning foods that cause distress.", "practice": "Enjoy a meal with gentle, wholesome flavors without extreme stimulants."},
+    {"id": "G044", "ring": "life", "domain": "Āhāra — Food & Eating", "english": "Eating awareness", "sanskrit": "सचेतनाहार", "verse": "BG 6.16–17", "sourceType": "modern_application", "meaning": "Mindful attention during eating rather than unconscious devouring while distracted.", "practice": "Eat one full meal in total silence without screens or reading."},
+    {"id": "G045", "ring": "life", "domain": "Āhāra — Food & Eating", "english": "Eating motivation", "sanskrit": "आहारहेतु", "verse": "BG 17.7", "sourceType": "modern_application", "meaning": "Inquiring whether hunger, emotion, habit, or social pressure drives the meal.", "practice": "Pause before eating and ask: Am I hungry, or seeking emotional comfort?"},
+    {"id": "G046", "ring": "life", "domain": "Āhāra — Food & Eating", "english": "Food attachment", "sanskrit": "रसलोलुपता", "verse": "BG 2.59", "sourceType": "traditional_commentary", "meaning": "Cravings and emotional dependence on specific tastes and sensory indulgences.", "practice": "Notice a food craving arise and let it pass without indulging it."},
+    {"id": "G047", "ring": "life", "domain": "Āhāra — Food & Eating", "english": "Food discipline", "sanskrit": "मिताहार", "verse": "BG 6.16–17", "sourceType": "direct_gita", "meaning": "Regulated eating — neither eating too much nor starving oneself.", "practice": "Stop eating when your stomach is three-quarters satisfied."},
+    {"id": "G048", "ring": "life", "domain": "Āhāra — Food & Eating", "english": "Food reflection", "sanskrit": "आहारसमीक्षा", "verse": "BG 17.7", "sourceType": "modern_application", "meaning": "Post-meal check-in evaluating how food affected clarity, energy, and lightness.", "practice": "Check in 30 minutes after eating: Do you feel light or lethargic?"},
+
+    {"id": "G049", "ring": "life", "domain": "Work & Leadership", "english": "Duty", "sanskrit": "कर्तव्य", "verse": "BG 2.47, 3.8", "sourceType": "direct_gita", "meaning": "Perform your prescribed duty, for action is superior to inaction.", "practice": "Fulfill what is yours to do today with pure excellence."},
+    {"id": "G050", "ring": "life", "domain": "Work & Leadership", "english": "Effort", "sanskrit": "प्रयत्न", "verse": "BG 18.23", "sourceType": "direct_gita", "meaning": "Sattvic work performed with wholehearted dedication and without aversion.", "practice": "Give your finest craftsmanship to a task regardless of its visibility."},
+    {"id": "G051", "ring": "life", "domain": "Work & Leadership", "english": "Motivation", "sanskrit": "कार्यप्रेरणा", "verse": "BG 18.24", "sourceType": "direct_gita", "meaning": "Discerning whether work is fueled by dharma, egoic prestige, or fear.", "practice": "Clarify your core intention before starting your most important task."},
+    {"id": "G052", "ring": "life", "domain": "Work & Leadership", "english": "Achievement", "sanskrit": "सिद्धि", "verse": "BG 2.48", "sourceType": "direct_gita", "meaning": "Equanimity in achievement and non-achievement is called Yoga.", "practice": "Celebrate an accomplishment with gratitude, not egoic inflation."},
+    {"id": "G053", "ring": "life", "domain": "Work & Leadership", "english": "Recognition", "sanskrit": "यशोलिप्सा", "verse": "BG 17.18", "sourceType": "direct_gita", "meaning": "Releasing the craving for applause, public accolades, and praise.", "practice": "Deliver high-impact work quietly without announcing your contribution."},
+    {"id": "G054", "ring": "life", "domain": "Work & Leadership", "english": "Attachment to results", "sanskrit": "फलासक्ति", "verse": "BG 2.47", "sourceType": "direct_gita", "meaning": "You have a right to action alone, never to the fruits of action.", "practice": "Invest 100% in the process, then consciously surrender the outcome."},
+    {"id": "G055", "ring": "life", "domain": "Work & Leadership", "english": "Competition", "sanskrit": "स्पर्धाभाव", "verse": "BG 3.35", "sourceType": "traditional_commentary", "meaning": "Focusing on one's own authentic svadharma rather than competing with others.", "practice": "Compete only with your own past standard of integrity and mastery."},
+    {"id": "G056", "ring": "life", "domain": "Work & Leadership", "english": "Responsibility", "sanskrit": "उत्तरदायित्व", "verse": "BG 3.21", "sourceType": "direct_gita", "meaning": "Whatever standard a great leader sets, ordinary people follow.", "practice": "Set a courageous, ethical example in today's team interaction."},
+    {"id": "G057", "ring": "life", "domain": "Work & Leadership", "english": "Response to success/failure", "sanskrit": "सिद्ध्यसिद्ध्योः समत्वम्", "verse": "BG 2.48", "sourceType": "direct_gita", "meaning": "Remaining unshaken whether an endeavor succeeds or fails.", "practice": "Meet both triumph and setback today with the same calm poise."},
+
+    {"id": "G058", "ring": "life", "domain": "Relationships & Family", "english": "Listening", "sanskrit": "श्रवण", "verse": "BG 13.8", "sourceType": "traditional_commentary", "meaning": "Humble, deep listening without formulating mental counterarguments.", "practice": "Listen completely to a loved one today without interrupting once."},
+    {"id": "G059", "ring": "life", "domain": "Relationships & Family", "english": "Compassion", "sanskrit": "मैत्री", "verse": "BG 12.13", "sourceType": "direct_gita", "meaning": "Affectionate goodwill toward all beings, free from possessiveness.", "practice": "Extend patience to a family member or colleague who is struggling."},
+    {"id": "G060", "ring": "life", "domain": "Relationships & Family", "english": "Attachment", "sanskrit": "सम्बन्धसङ्ग", "verse": "BG 14.7", "sourceType": "direct_gita", "meaning": "Clinging to people and demanding they fulfill your internal voids.", "practice": "Love someone for who they are, without holding them to your script."},
+    {"id": "G061", "ring": "life", "domain": "Relationships & Family", "english": "Possessiveness", "sanskrit": "ममकार", "verse": "BG 2.71", "sourceType": "direct_gita", "meaning": "Freedom from the false sense of 'This person belongs exclusively to me.'", "practice": "Give someone the space to make their own decision without guilt."},
+    {"id": "G062", "ring": "life", "domain": "Relationships & Family", "english": "Conflict", "sanskrit": "कलहशमन", "verse": "BG 2.62–63", "sourceType": "direct_gita", "meaning": "Interrupting the downward spiral from irritation to anger and delusion.", "practice": "De-escalate a tense interaction by pausing and speaking softly."},
+    {"id": "G063", "ring": "life", "domain": "Relationships & Family", "english": "Forgiveness", "sanskrit": "सम्बन्धक्षमा", "verse": "BG 16.3", "sourceType": "direct_gita", "meaning": "Releasing interpersonal resentments so love and dharma can flow.", "practice": "Forgive a minor transgression today without requiring an apology."},
+    {"id": "G064", "ring": "life", "domain": "Relationships & Family", "english": "Speech", "sanskrit": "वाक्शौच", "verse": "BG 17.15", "sourceType": "direct_gita", "meaning": "Communicating with truth, warmth, and uplifting encouragement.", "practice": "Offer genuine, unprompted appreciation to someone in your home."},
+    {"id": "G065", "ring": "life", "domain": "Relationships & Family", "english": "Expectations", "sanskrit": "अपेक्षात्याग", "verse": "BG 2.47", "sourceType": "traditional_commentary", "meaning": "Serving others without demanding emotional return on investment.", "practice": "Do something helpful today without tallying a mental score."},
+    {"id": "G066", "ring": "life", "domain": "Relationships & Family", "english": "Service", "sanskrit": "सेवाभाव", "verse": "BG 3.19", "sourceType": "direct_gita", "meaning": "Acting for the welfare of loved ones as a joyful, selfless offering.", "practice": "Take on a tedious chore for another person with a light heart."},
+
+    {"id": "G067", "ring": "life", "domain": "Material Life", "english": "Desire", "sanskrit": "विषयकाङ्क्षा", "verse": "BG 2.62", "sourceType": "direct_gita", "meaning": "Observing the seed of consumer longing before it turns into attachment.", "practice": "Delay a non-essential purchase for 48 hours to test its true necessity."},
+    {"id": "G068", "ring": "life", "domain": "Material Life", "english": "Consumption", "sanskrit": "भोगसंयम", "verse": "BG 17.9", "sourceType": "direct_gita", "meaning": "Practicing conscious moderation in material acquisition and stimulation.", "practice": "Declutter one physical or digital drawer, discarding the excess."},
+    {"id": "G069", "ring": "life", "domain": "Material Life", "english": "Possession", "sanskrit": "अपरिग्रह", "verse": "BG 18.53", "sourceType": "direct_gita", "meaning": "Living lightly in the world without accumulating unnecessary weight.", "practice": "Identify something you own that can be given to someone who needs it."},
+    {"id": "G070", "ring": "life", "domain": "Material Life", "english": "Status", "sanskrit": "मानत्याग", "verse": "BG 16.4", "sourceType": "direct_gita", "meaning": "Letting go of luxury displays designed solely to impress others.", "practice": "Choose simple, dignified utility over prestige-seeking luxury today."},
+    {"id": "G071", "ring": "life", "domain": "Material Life", "english": "Wealth attachment", "sanskrit": "वित्तत्याग", "verse": "BG 2.71", "sourceType": "direct_gita", "meaning": "Viewing wealth as an instrument of stewardship rather than personal identity.", "practice": "Remember that all material resources pass through our hands temporarily."},
+    {"id": "G072", "ring": "life", "domain": "Material Life", "english": "Generosity", "sanskrit": "दानशीलत्व", "verse": "BG 17.20", "sourceType": "direct_gita", "meaning": "Giving cheerfully with respect, expecting nothing in return.", "practice": "Give an anonymous gift or financial help to a worthy recipient."},
+    {"id": "G073", "ring": "life", "domain": "Material Life", "english": "Charity", "sanskrit": "सात्त्विकदान", "verse": "BG 17.20–22", "sourceType": "direct_gita", "meaning": "Charity given at the right place, right time, to a deserving person.", "practice": "Contribute to a cause with careful discernment and reverence."},
+    {"id": "G074", "ring": "life", "domain": "Material Life", "english": "Contentment", "sanskrit": "तृप्ति", "verse": "BG 12.19", "sourceType": "direct_gita", "meaning": "Knowing that your true worth is untouched by possessions or bank balance.", "practice": "Walk through a market and observe: 'How many things I do not need!'"},
+    {"id": "G075", "ring": "life", "domain": "Material Life", "english": "Simplicity", "sanskrit": "सरलता", "verse": "BG 13.8", "sourceType": "direct_gita", "meaning": "Straightforwardness and unpretentious simplicity in daily lifestyle.", "practice": "Simplify your schedule today by removing one non-essential activity."},
+
+    {"id": "G076", "ring": "life", "domain": "Body & Discipline", "english": "Sleep", "sanskrit": "स्वप्नावबोध", "verse": "BG 6.17", "sourceType": "direct_gita", "meaning": "Regulated sleep that restores vitality without slipping into tamasic stupor.", "practice": "Maintain a regular sleep and waking rhythm tonight."},
+    {"id": "G077", "ring": "life", "domain": "Body & Discipline", "english": "Activity", "sanskrit": "चेष्टा", "verse": "BG 6.17", "sourceType": "direct_gita", "meaning": "Regulated bodily movement and exercise supporting health and alertness.", "practice": "Engage in 20 minutes of conscious physical movement today."},
+    {"id": "G078", "ring": "life", "domain": "Body & Discipline", "english": "Cleanliness", "sanskrit": "शौच", "verse": "BG 13.8, 17.14", "sourceType": "direct_gita", "meaning": "Internal purity and external cleanliness of body and environment.", "practice": "Clean and organize your immediate workspace thoroughly."},
+    {"id": "G079", "ring": "life", "domain": "Body & Discipline", "english": "Self-control", "sanskrit": "इन्द्रियसंयम", "verse": "BG 2.61", "sourceType": "direct_gita", "meaning": "Restraining the senses from compulsive outward wandering.", "practice": "Fast from digital scrolling or snacking for three focused hours."},
+    {"id": "G080", "ring": "life", "domain": "Body & Discipline", "english": "Routine", "sanskrit": "दिनचर्या", "verse": "BG 6.17", "sourceType": "direct_gita", "meaning": "Rhythms that eliminate chaos and support mental steadiness.", "practice": "Anchor your morning with 15 minutes of grounding practice."},
+    {"id": "G081", "ring": "life", "domain": "Body & Discipline", "english": "Moderation", "sanskrit": "युक्तता", "verse": "BG 6.16–17", "sourceType": "direct_gita", "meaning": "Yoga is attained by one regulated in food, recreation, work, and sleep.", "practice": "Choose the middle path between extreme indulgence and harsh deprivation."},
+    {"id": "G082", "ring": "life", "domain": "Body & Discipline", "english": "Comfort seeking", "sanskrit": "सुखलोलुपता", "verse": "BG 14.8", "sourceType": "traditional_commentary", "meaning": "Recognizing when the urge for comfort paralyzes noble action.", "practice": "Take on one physically uncomfortable task cheerfully."},
+    {"id": "G083", "ring": "life", "domain": "Body & Discipline", "english": "Discipline", "sanskrit": "तपस्", "verse": "BG 17.14–16", "sourceType": "direct_gita", "meaning": "Austerity of body, speech, and mind performed with pure faith.", "practice": "Honor a difficult commitment without negotiating with laziness."},
+    {"id": "G084", "ring": "life", "domain": "Body & Discipline", "english": "Consistency", "sanskrit": "अभ्यासनिष्ठा", "verse": "BG 6.35", "sourceType": "direct_gita", "meaning": "Unbroken continuity in practice over long periods with dedication.", "practice": "Show up for your daily practice even when motivation feels low."},
+
+    {"id": "G085", "ring": "life", "domain": "Dharma / Seva / Spiritual Practice", "english": "Duty", "sanskrit": "स्वधर्म", "verse": "BG 3.35, 18.47", "sourceType": "direct_gita", "meaning": "Better is one's own duty though imperfect than another's well-performed.", "practice": "Devote yourself to your natural responsibilities without envy."},
+    {"id": "G086", "ring": "life", "domain": "Dharma / Seva / Spiritual Practice", "english": "Service", "sanskrit": "लोकसंग्रह", "verse": "BG 3.20, 18.46", "sourceType": "direct_gita", "meaning": "Working for the welfare and cohesion of the world (Loka-saṅgraha).", "practice": "Contribute your skills toward making someone else's burden lighter."},
+    {"id": "G087", "ring": "life", "domain": "Dharma / Seva / Spiritual Practice", "english": "Faith", "sanskrit": "श्रद्धा", "verse": "BG 17.3", "sourceType": "direct_gita", "meaning": "A person is made of their faith; as their faith is, so indeed they are.", "practice": "Align your deepest conviction with noble, uplifting truths."},
+    {"id": "G088", "ring": "life", "domain": "Dharma / Seva / Spiritual Practice", "english": "Study", "sanskrit": "स्वाध्याय", "verse": "BG 4.34, 16.1", "sourceType": "direct_gita", "meaning": "Contemplation of sacred wisdom and sincere self-inquiry.", "practice": "Read and reflect on one verse of the Bhagavad Gita today."},
+    {"id": "G089", "ring": "life", "domain": "Dharma / Seva / Spiritual Practice", "english": "Meditation", "sanskrit": "ध्यान", "verse": "BG 6.10–12", "sourceType": "direct_gita", "meaning": "Fixing the mind steadily on the Self, free from all distractions.", "practice": "Sit in quiet meditation, witnessing breath and mental ripples."},
+    {"id": "G090", "ring": "life", "domain": "Dharma / Seva / Spiritual Practice", "english": "Devotion", "sanskrit": "ईश्वरप्रणिधान", "verse": "BG 9.27, 14.26", "sourceType": "direct_gita", "meaning": "Whatever you do, eat, or offer, do that as an offering unto the Divine.", "practice": "Consciously dedicate all fruits of this day to the Supreme Source."},
+    {"id": "G091", "ring": "life", "domain": "Dharma / Seva / Spiritual Practice", "english": "Surrender", "sanskrit": "शरणागति", "verse": "BG 18.66", "sourceType": "direct_gita", "meaning": "Abandoning egoic burdens and resting in total surrender to the Divine.", "practice": "Surrender anxiety over an unresolved issue into higher hands."},
+    {"id": "G092", "ring": "life", "domain": "Dharma / Seva / Spiritual Practice", "english": "Reflection", "sanskrit": "आत्मसमीक्षा", "verse": "BG 10.10", "sourceType": "direct_gita", "meaning": "Evening honest inventory of thoughts, actions, and attachments.", "practice": "Review your day with compassionate clarity before going to sleep."},
+    {"id": "G093", "ring": "life", "domain": "Dharma / Seva / Spiritual Practice", "english": "Non-attachment", "sanskrit": "अनासक्ति", "verse": "BG 2.47, 14.25", "sourceType": "direct_gita", "meaning": "Dwelling in the world with mastery, neither clinging nor averting.", "practice": "Hold all temporary roles lightly while staying deeply present."},
+
+    {"id": "G094", "ring": "awareness", "english": "Noticing", "sanskrit": "अवेक्षण", "translit": "Avekṣaṇa", "verse": "BG 2.62", "sourceType": "traditional_commentary", "meaning": "Catching a thought, sensation, or reaction at the very moment it arises.", "practice": "Catch the very first spark of frustration today before it speaks."},
+    {"id": "G095", "ring": "awareness", "english": "Naming", "sanskrit": "नामकरण", "translit": "Nāma-karaṇa", "verse": "BG 14.13", "sourceType": "traditional_commentary", "meaning": "Accurately identifying which guṇa is active: 'This is Rajasic craving.'", "practice": "Name your emotion objectively: 'I notice impatience,' not 'I am impatient.'"},
+    {"id": "G096", "ring": "awareness", "english": "Witnessing", "sanskrit": "साक्षित्व", "translit": "Sākṣitva", "verse": "BG 14.19", "sourceType": "direct_gita", "meaning": "Knowing that only the guṇas are moving among the guṇas — the Self is Witness.", "practice": "Watch a mood pass through your mind like a cloud across the sky."},
+    {"id": "G097", "ring": "awareness", "english": "Pausing", "sanskrit": "विराम", "translit": "Virāma", "verse": "BG 2.62–63", "sourceType": "traditional_commentary", "meaning": "Creating a conscious sacred gap between stimulus and reaction.", "practice": "Take three slow conscious breaths before replying to any challenge."},
+    {"id": "G098", "ring": "awareness", "english": "Viveka / Discernment", "sanskrit": "विवेक", "translit": "Viveka", "verse": "BG 18.30", "sourceType": "direct_gita", "meaning": "Knowing right action from wrong, what binds from what liberates.", "practice": "Distinguish between what is immediately pleasant (preyas) and truly good (śreyas)."},
+    {"id": "G099", "ring": "awareness", "english": "Separating impulse from choice", "sanskrit": "इच्छाविचारभेद", "translit": "Icchā-Vicāra Bheda", "verse": "BG 2.60", "sourceType": "traditional_commentary", "meaning": "Recognizing that having an impulse does not obligate you to obey it.", "practice": "Acknowledge an emotional urge, then consciously choose the dharmic alternative."},
+    {"id": "G100", "ring": "awareness", "english": "Conscious choice", "sanskrit": "सबोधसङ्कल्प", "translit": "Sabodha Saṅkalpa", "verse": "BG 2.61", "sourceType": "direct_gita", "meaning": "Steering the intellect with intentional wisdom and clear purpose.", "practice": "Make your next major daily decision with deliberate dharmic intent."},
+    {"id": "G101", "ring": "awareness", "english": "Right action", "sanskrit": "कर्तव्यकर्म", "translit": "Kartavya Karma", "verse": "BG 3.8, 18.23", "sourceType": "direct_gita", "meaning": "Acting purely out of duty and service, free from desire and aversion.", "practice": "Perform your duty with wholehearted excellence without grumbling."},
+    {"id": "G102", "ring": "awareness", "english": "Abhyāsa / Practice", "sanskrit": "अभ्यास", "translit": "Abhyāsa", "verse": "BG 6.35", "sourceType": "direct_gita", "meaning": "Steady, repetitive cultivation of inner stillness day after day.", "practice": "Recommit to your daily spiritual discipline without breaking momentum."},
+    {"id": "G103", "ring": "awareness", "english": "Vairāgya / Non-attachment", "sanskrit": "वैराग्य", "translit": "Vairāgya", "verse": "BG 6.35, 14.25", "sourceType": "direct_gita", "meaning": "Inner freedom that releases feverish thirst for worldly rewards.", "practice": "Release all grasping over how a recent conversation is perceived."},
+    {"id": "G104", "ring": "awareness", "english": "Equanimity", "sanskrit": "समत्व", "translit": "Samatvam", "verse": "BG 2.48, 14.24", "sourceType": "direct_gita", "meaning": "Evenness of mind in pleasure and pain, honor and dishonor, praise and blame.", "practice": "Maintain undisturbed serenity whether praised or criticized today."},
+    {"id": "G105", "ring": "awareness", "english": "Sense mastery", "sanskrit": "इन्द्रियनिग्रह", "translit": "Indriya-nigraha", "verse": "BG 2.58", "sourceType": "direct_gita", "meaning": "Withdrawing senses from tempting objects as a tortoise draws in its limbs.", "practice": "Withdraw attention from useless gossip and sensory overstimulation."},
+    {"id": "G106", "ring": "awareness", "english": "Steady attention", "sanskrit": "स्थिरबुद्धि", "translit": "Sthira Buddhi", "verse": "BG 2.61, 2.68", "sourceType": "direct_gita", "meaning": "Undivided, unwavering concentration anchored in spiritual truth.", "practice": "Focus 100% on one task without multitasking for 45 minutes."},
+    {"id": "G107", "ring": "awareness", "english": "Steady wisdom", "sanskrit": "प्रज्ञास्थिति", "translit": "Prajñā-sthiti", "verse": "BG 2.57", "sourceType": "direct_gita", "meaning": "Firmly established understanding that remains joyous in the Self alone.", "practice": "Observe circumstances changing while resting in inner constancy."},
+    {"id": "G108", "ring": "awareness", "english": "Sthita-prajña", "sanskrit": "स्थितप्रज्ञ", "translit": "Sthita-prajña", "verse": "BG 2.55–56", "sourceType": "direct_gita", "meaning": "One whose mind is satisfied in the Self alone, freed from attachment, fear, and anger.", "practice": "Rest in the quiet witness of all experience — that witness is your true nature."}
+  ]
+}
+</script>
+
 <script>
-const E=[{"layer": "guna", "guna": "Sattva", "name": "Sattva", "sa": "सत्त्व", "color": "#D4AF37", "id": "G001"}, {"layer": "quality", "guna": "Sattva", "name": "Clarity", "color": "#D4AF37", "id": "G002"}, {"layer": "quality", "guna": "Sattva", "name": "Wisdom", "color": "#D4AF37", "id": "G003"}, {"layer": "quality", "guna": "Sattva", "name": "Peace", "color": "#D4AF37", "id": "G004"}, {"layer": "quality", "guna": "Sattva", "name": "Truthfulness", "color": "#D4AF37", "id": "G005"}, {"layer": "quality", "guna": "Sattva", "name": "Compassion", "color": "#D4AF37", "id": "G006"}, {"layer": "quality", "guna": "Sattva", "name": "Gratitude", "color": "#D4AF37", "id": "G007"}, {"layer": "quality", "guna": "Sattva", "name": "Humility", "color": "#D4AF37", "id": "G008"}, {"layer": "quality", "guna": "Sattva", "name": "Patience", "color": "#D4AF37", "id": "G009"}, {"layer": "quality", "guna": "Sattva", "name": "Contentment", "color": "#D4AF37", "id": "G010"}, {"layer": "quality", "guna": "Sattva", "name": "Devotion", "color": "#D4AF37", "id": "G011"}, {"layer": "quality", "guna": "Sattva", "name": "Forgiveness", "color": "#D4AF37", "id": "G012"}, {"layer": "quality", "guna": "Sattva", "name": "Self-discipline", "color": "#D4AF37", "id": "G013"}, {"layer": "guna", "guna": "Rajas", "name": "Rajas", "sa": "रजस्", "color": "#C62828", "id": "G014"}, {"layer": "quality", "guna": "Rajas", "name": "Desire", "color": "#C62828", "id": "G015"}, {"layer": "quality", "guna": "Rajas", "name": "Ambition", "color": "#C62828", "id": "G016"}, {"layer": "quality", "guna": "Rajas", "name": "Achievement", "color": "#C62828", "id": "G017"}, {"layer": "quality", "guna": "Rajas", "name": "Competition", "color": "#C62828", "id": "G018"}, {"layer": "quality", "guna": "Rajas", "name": "Recognition", "color": "#C62828", "id": "G019"}, {"layer": "quality", "guna": "Rajas", "name": "Restlessness", "color": "#C62828", "id": "G020"}, {"layer": "quality", "guna": "Rajas", "name": "Attachment", "color": "#C62828", "id": "G021"}, {"layer": "quality", "guna": "Rajas", "name": "Possessiveness", "color": "#C62828", "id": "G022"}, {"layer": "quality", "guna": "Rajas", "name": "Ego", "color": "#C62828", "id": "G023"}, {"layer": "quality", "guna": "Rajas", "name": "Anxiety", "color": "#C62828", "id": "G024"}, {"layer": "quality", "guna": "Rajas", "name": "Impulsiveness", "color": "#C62828", "id": "G025"}, {"layer": "quality", "guna": "Rajas", "name": "Overactivity", "color": "#C62828", "id": "G026"}, {"layer": "guna", "guna": "Tamas", "name": "Tamas", "sa": "तमस्", "color": "#37474F", "id": "G027"}, {"layer": "quality", "guna": "Tamas", "name": "Ignorance", "color": "#37474F", "id": "G028"}, {"layer": "quality", "guna": "Tamas", "name": "Confusion", "color": "#37474F", "id": "G029"}, {"layer": "quality", "guna": "Tamas", "name": "Inertia", "color": "#37474F", "id": "G030"}, {"layer": "quality", "guna": "Tamas", "name": "Laziness", "color": "#37474F", "id": "G031"}, {"layer": "quality", "guna": "Tamas", "name": "Excessive sleep", "color": "#37474F", "id": "G032"}, {"layer": "quality", "guna": "Tamas", "name": "Procrastination", "color": "#37474F", "id": "G033"}, {"layer": "quality", "guna": "Tamas", "name": "Neglect", "color": "#37474F", "id": "G034"}, {"layer": "quality", "guna": "Tamas", "name": "Apathy", "color": "#37474F", "id": "G035"}, {"layer": "quality", "guna": "Tamas", "name": "Delusion", "color": "#37474F", "id": "G036"}, {"layer": "quality", "guna": "Tamas", "name": "Fear-driven avoidance", "color": "#37474F", "id": "G037"}, {"layer": "quality", "guna": "Tamas", "name": "Destructive anger", "color": "#37474F", "id": "G038"}, {"layer": "quality", "guna": "Tamas", "name": "Unconscious habit", "color": "#37474F", "id": "G039"}, {"layer": "life", "domain": "Āhāra — Food & Eating", "name": "Food quality", "color": "#9A8350", "id": "G040"}, {"layer": "life", "domain": "Āhāra — Food & Eating", "name": "Freshness", "color": "#9A8350", "id": "G041"}, {"layer": "life", "domain": "Āhāra — Food & Eating", "name": "Nourishment", "color": "#9A8350", "id": "G042"}, {"layer": "life", "domain": "Āhāra — Food & Eating", "name": "Intensity", "color": "#9A8350", "id": "G043"}, {"layer": "life", "domain": "Āhāra — Food & Eating", "name": "Eating awareness", "color": "#9A8350", "id": "G044"}, {"layer": "life", "domain": "Āhāra — Food & Eating", "name": "Eating motivation", "color": "#9A8350", "id": "G045"}, {"layer": "life", "domain": "Āhāra — Food & Eating", "name": "Food attachment", "color": "#9A8350", "id": "G046"}, {"layer": "life", "domain": "Āhāra — Food & Eating", "name": "Food discipline", "color": "#9A8350", "id": "G047"}, {"layer": "life", "domain": "Āhāra — Food & Eating", "name": "Food reflection", "color": "#9A8350", "id": "G048"}, {"layer": "life", "domain": "Work & Leadership", "name": "Duty", "color": "#9A8350", "id": "G049"}, {"layer": "life", "domain": "Work & Leadership", "name": "Effort", "color": "#9A8350", "id": "G050"}, {"layer": "life", "domain": "Work & Leadership", "name": "Motivation", "color": "#9A8350", "id": "G051"}, {"layer": "life", "domain": "Work & Leadership", "name": "Achievement", "color": "#9A8350", "id": "G052"}, {"layer": "life", "domain": "Work & Leadership", "name": "Recognition", "color": "#9A8350", "id": "G053"}, {"layer": "life", "domain": "Work & Leadership", "name": "Result attachment", "color": "#9A8350", "id": "G054"}, {"layer": "life", "domain": "Work & Leadership", "name": "Competition", "color": "#9A8350", "id": "G055"}, {"layer": "life", "domain": "Work & Leadership", "name": "Responsibility", "color": "#9A8350", "id": "G056"}, {"layer": "life", "domain": "Work & Leadership", "name": "Success/failure response", "color": "#9A8350", "id": "G057"}, {"layer": "life", "domain": "Relationships & Family", "name": "Listening", "color": "#9A8350", "id": "G058"}, {"layer": "life", "domain": "Relationships & Family", "name": "Compassion", "color": "#9A8350", "id": "G059"}, {"layer": "life", "domain": "Relationships & Family", "name": "Attachment", "color": "#9A8350", "id": "G060"}, {"layer": "life", "domain": "Relationships & Family", "name": "Possessiveness", "color": "#9A8350", "id": "G061"}, {"layer": "life", "domain": "Relationships & Family", "name": "Conflict", "color": "#9A8350", "id": "G062"}, {"layer": "life", "domain": "Relationships & Family", "name": "Forgiveness", "color": "#9A8350", "id": "G063"}, {"layer": "life", "domain": "Relationships & Family", "name": "Speech", "color": "#9A8350", "id": "G064"}, {"layer": "life", "domain": "Relationships & Family", "name": "Expectations", "color": "#9A8350", "id": "G065"}, {"layer": "life", "domain": "Relationships & Family", "name": "Service", "color": "#9A8350", "id": "G066"}, {"layer": "life", "domain": "Material Life", "name": "Desire", "color": "#9A8350", "id": "G067"}, {"layer": "life", "domain": "Material Life", "name": "Consumption", "color": "#9A8350", "id": "G068"}, {"layer": "life", "domain": "Material Life", "name": "Possession", "color": "#9A8350", "id": "G069"}, {"layer": "life", "domain": "Material Life", "name": "Status", "color": "#9A8350", "id": "G070"}, {"layer": "life", "domain": "Material Life", "name": "Wealth attachment", "color": "#9A8350", "id": "G071"}, {"layer": "life", "domain": "Material Life", "name": "Generosity", "color": "#9A8350", "id": "G072"}, {"layer": "life", "domain": "Material Life", "name": "Charity", "color": "#9A8350", "id": "G073"}, {"layer": "life", "domain": "Material Life", "name": "Contentment", "color": "#9A8350", "id": "G074"}, {"layer": "life", "domain": "Material Life", "name": "Simplicity", "color": "#9A8350", "id": "G075"}, {"layer": "life", "domain": "Body & Discipline", "name": "Sleep", "color": "#9A8350", "id": "G076"}, {"layer": "life", "domain": "Body & Discipline", "name": "Activity", "color": "#9A8350", "id": "G077"}, {"layer": "life", "domain": "Body & Discipline", "name": "Cleanliness", "color": "#9A8350", "id": "G078"}, {"layer": "life", "domain": "Body & Discipline", "name": "Self-control", "color": "#9A8350", "id": "G079"}, {"layer": "life", "domain": "Body & Discipline", "name": "Routine", "color": "#9A8350", "id": "G080"}, {"layer": "life", "domain": "Body & Discipline", "name": "Moderation", "color": "#9A8350", "id": "G081"}, {"layer": "life", "domain": "Body & Discipline", "name": "Comfort seeking", "color": "#9A8350", "id": "G082"}, {"layer": "life", "domain": "Body & Discipline", "name": "Discipline", "color": "#9A8350", "id": "G083"}, {"layer": "life", "domain": "Body & Discipline", "name": "Consistency", "color": "#9A8350", "id": "G084"}, {"layer": "life", "domain": "Dharma / Seva / Spiritual Practice", "name": "Duty", "color": "#9A8350", "id": "G085"}, {"layer": "life", "domain": "Dharma / Seva / Spiritual Practice", "name": "Service", "color": "#9A8350", "id": "G086"}, {"layer": "life", "domain": "Dharma / Seva / Spiritual Practice", "name": "Faith", "color": "#9A8350", "id": "G087"}, {"layer": "life", "domain": "Dharma / Seva / Spiritual Practice", "name": "Study", "color": "#9A8350", "id": "G088"}, {"layer": "life", "domain": "Dharma / Seva / Spiritual Practice", "name": "Meditation", "color": "#9A8350", "id": "G089"}, {"layer": "life", "domain": "Dharma / Seva / Spiritual Practice", "name": "Devotion", "color": "#9A8350", "id": "G090"}, {"layer": "life", "domain": "Dharma / Seva / Spiritual Practice", "name": "Surrender", "color": "#9A8350", "id": "G091"}, {"layer": "life", "domain": "Dharma / Seva / Spiritual Practice", "name": "Reflection", "color": "#9A8350", "id": "G092"}, {"layer": "life", "domain": "Dharma / Seva / Spiritual Practice", "name": "Non-attachment", "color": "#9A8350", "id": "G093"}, {"layer": "awareness", "name": "Noticing", "color": "#7651A7", "id": "G094"}, {"layer": "awareness", "name": "Naming", "color": "#7651A7", "id": "G095"}, {"layer": "awareness", "name": "Witnessing", "color": "#7651A7", "id": "G096"}, {"layer": "awareness", "name": "Pausing", "color": "#7651A7", "id": "G097"}, {"layer": "awareness", "name": "Viveka / Discernment", "color": "#7651A7", "id": "G098"}, {"layer": "awareness", "name": "Separating impulse from choice", "color": "#7651A7", "id": "G099"}, {"layer": "awareness", "name": "Conscious choice", "color": "#7651A7", "id": "G100"}, {"layer": "awareness", "name": "Right action", "color": "#7651A7", "id": "G101"}, {"layer": "awareness", "name": "Abhyāsa / Practice", "color": "#7651A7", "id": "G102"}, {"layer": "awareness", "name": "Vairāgya / Non-attachment", "color": "#7651A7", "id": "G103"}, {"layer": "awareness", "name": "Equanimity", "color": "#7651A7", "id": "G104"}, {"layer": "awareness", "name": "Sense mastery", "color": "#7651A7", "id": "G105"}, {"layer": "awareness", "name": "Steady attention", "color": "#7651A7", "id": "G106"}, {"layer": "awareness", "name": "Steady wisdom", "color": "#7651A7", "id": "G107"}, {"layer": "awareness", "name": "Sthita-prajña", "color": "#7651A7", "id": "G108"}];
-const NS="http://www.w3.org/2000/svg";
-const svg=document.getElementById("wheelSvg");
-let rotation=0,lastScores=null;
+// ============================================================
+// DATA & STATE
+// ============================================================
+const DATA = JSON.parse(document.getElementById('data-json').textContent);
+const ATMAN = DATA.atman;
+const E = DATA.elements; // 108 canonical elements
 
-function polar(r,a){const x=(a-90)*Math.PI/180;return[r*Math.cos(x),r*Math.sin(x)]}
-function sector(r1,r2,a1,a2){
-  const A=polar(r2,a1),B=polar(r2,a2),C=polar(r1,a2),D=polar(r1,a1);
-  const large=(a2-a1)>180?1:0;
-  return `M${A[0]},${A[1]}A${r2},${r2} 0 ${large} 1 ${B[0]},${B[1]}L${C[0]},${C[1]}A${r1},${r1} 0 ${large} 0 ${D[0]},${D[1]}Z`;
+// COLOR PALETTES (Inspired by Emotion Wheel ew.png)
+const GUNA_BASE_COLORS = {
+  Sattva: "#F4D03F",
+  Rajas: "#E74C3C",
+  Tamas: "#546E7A"
+};
+
+// Curated pastel/vibrant palette per wedge in ring 2 & 3 matching ew.png
+const SATTVA_QUAL_COLORS = [
+  "#FFF9C4", "#FFF59D", "#FFF176", "#FFEE58", "#FFEB3B", "#FDD835",
+  "#FBC02D", "#F9A825", "#F7DC6F", "#F8C471", "#FAD7A0", "#FCF3CF"
+];
+const RAJAS_QUAL_COLORS = [
+  "#FFCDD2", "#EF9A9A", "#E57373", "#EF5350", "#F44336", "#E53935",
+  "#FFAB91", "#FF8A65", "#FF7043", "#F1948A", "#EC7063", "#E74C3C"
+];
+const TAMAS_QUAL_COLORS = [
+  "#CFD8DC", "#B0BEC5", "#90A4AE", "#78909C", "#607D8B", "#546E7A",
+  "#C5CAE9", "#9FA8DA", "#7986CB", "#80DEEA", "#4DD0E1", "#26C6DA"
+];
+
+const LIFE_COLORS = [
+  // Ahara (9)
+  "#E8F8F5", "#D1F2EB", "#A3E4D7", "#76D7C4", "#E8F5E9", "#C8E6C9", "#A5D6A7", "#81C784", "#DCEDC8",
+  // Work (9)
+  "#FEF9E7", "#FCF3CF", "#F9E79F", "#F7DC6F", "#FAD7A0", "#F8C471", "#EDBB99", "#E59866", "#FEF5E7",
+  // Relationships (9)
+  "#FDEDEC", "#FADBD8", "#F5B7B1", "#F1948A", "#EC7063", "#E74C3C", "#FFEBEE", "#FFCDD2", "#EF9A9A",
+  // Material Life (9)
+  "#FBEEE6", "#F6DDCC", "#EDBB99", "#E59866", "#DC7633", "#D35400", "#BA4A00", "#F5CBA7", "#FAD7A0",
+  // Body & Discipline (9)
+  "#EBF5FB", "#D4E6F1", "#A9CCE3", "#7FB3D5", "#5499C7", "#2980B9", "#E8EAF6", "#C5CAE9", "#9FA8DA",
+  // Dharma / Spiritual (9)
+  "#E0F2F1", "#B2DFDB", "#80CBC4", "#4DB6AC", "#26A69A", "#80DEEA", "#4DD0E1", "#B2EBF2", "#E0F7FA"
+];
+
+const AWARENESS_COLORS = [
+  "#7B1FA2", "#8E24AA", "#9C27B0", "#AB47BC", "#BA68C8",
+  "#CE93D8", "#E1BEE7", "#D1C4E9", "#B39DDB", "#9575CD",
+  "#7E57C2", "#673AB7", "#5E35B1", "#512DA8", "#4527A0"
+];
+
+const SRC_LABEL = {
+  direct_gita: "Direct Gita Teaching",
+  traditional_commentary: "Traditional Interpretation",
+  modern_application: "Modern Application"
+};
+
+const NS = "http://www.w3.org/2000/svg";
+const svg = document.getElementById("wheelSvg");
+let rotation = 0;
+let currentZoom = 1;
+let currentLang = "en"; // "en" | "sa" | "translit"
+let activeElementId = "G000";
+
+// Helper: polar coordinate calculation
+function polar(r, aDeg){
+  const rad = (aDeg - 90) * Math.PI / 180;
+  return [r * Math.cos(rad), r * Math.sin(rad)];
 }
-function label(text,r,a,size,fill="#fff"){
-  const p=polar(r,a),t=document.createElementNS(NS,"text");
-  t.setAttribute("x",p[0]);t.setAttribute("y",p[1]);t.setAttribute("text-anchor","middle");
-  t.setAttribute("font-size",size);t.setAttribute("font-weight","800");t.setAttribute("fill",fill);
-  t.setAttribute("pointer-events","none");t.textContent=text;return t;
+
+// Helper: draw donut sector path
+function sectorPath(r1, r2, a1, a2){
+  const A = polar(r2, a1), B = polar(r2, a2), C = polar(r1, a2), D = polar(r1, a1);
+  const large = (a2 - a1) > 180 ? 1 : 0;
+  return `M${A[0]},${A[1]} A${r2},${r2} 0 ${large} 1 ${B[0]},${B[1]} L${C[0]},${C[1]} A${r1},${r1} 0 ${large} 0 ${D[0]},${D[1]} Z`;
 }
+
+// Helper: Determine text color based on background hex
+function getContrastColor(hexColor){
+  if(!hexColor || hexColor.startsWith("rgba")) return "#1A1813";
+  let c = hexColor.substring(1);
+  if(c.length === 3) c = c.split('').map(x=>x+x).join('');
+  const num = parseInt(c, 16);
+  const r = (num >> 16) & 255;
+  const g = (num >> 8) & 255;
+  const b = num & 255;
+  // Perceived luminance
+  const lum = (0.299*r + 0.587*g + 0.114*b);
+  return lum > 145 ? "#1A1813" : "#FFFFFF";
+}
+
+// Helper: Format radial text group
+function createRadialText(text, r, angle, fontSize, color, fontWeight="600", isSa=false){
+  const g = document.createElementNS(NS, "g");
+  let normAngle = (angle % 360 + 360) % 360;
+  let isFlipped = normAngle > 90 && normAngle < 270;
+  let rot = isFlipped ? normAngle + 90 : normAngle - 90;
+  
+  const p = polar(r, angle);
+  g.setAttribute("transform", `translate(${p[0]}, ${p[1]}) rotate(${rot})`);
+  g.setAttribute("pointer-events", "none");
+
+  const t = document.createElementNS(NS, "text");
+  t.setAttribute("x", 0);
+  t.setAttribute("y", 0);
+  t.setAttribute("text-anchor", "middle");
+  t.setAttribute("dominant-baseline", "central");
+  t.setAttribute("font-size", fontSize);
+  t.setAttribute("font-weight", fontWeight);
+  t.setAttribute("fill", color);
+  t.setAttribute("font-family", isSa ? "'Noto Serif Devanagari',serif" : "'Inter',system-ui,sans-serif");
+  t.setAttribute("letter-spacing", fontSize > 10 ? "0.04em" : "0.01em");
+
+  // Multi-word wrapping if text is long
+  if(text.length > 15 && text.includes(" ") && fontSize < 9){
+    const words = text.split(" ");
+    const mid = Math.ceil(words.length / 2);
+    const line1 = words.slice(0, mid).join(" ");
+    const line2 = words.slice(mid).join(" ");
+    
+    const tspan1 = document.createElementNS(NS, "tspan");
+    tspan1.setAttribute("x", 0);
+    tspan1.setAttribute("dy", "-0.55em");
+    tspan1.textContent = line1;
+    
+    const tspan2 = document.createElementNS(NS, "tspan");
+    tspan2.setAttribute("x", 0);
+    tspan2.setAttribute("dy", "1.1em");
+    tspan2.textContent = line2;
+    
+    t.appendChild(tspan1);
+    t.appendChild(tspan2);
+  } else {
+    t.textContent = text;
+  }
+
+  g.appendChild(t);
+  return g;
+}
+
+// Get display label depending on language toggle
+function getDisplayLabel(e){
+  if(currentLang === "sa" && e.sanskrit) return e.sanskrit;
+  if(currentLang === "translit" && e.translit) return e.translit;
+  return e.english || e.name;
+}
+
+// ============================================================
+// DRAW MUSEUM WHEEL (EMOTION WHEEL AESTHETIC)
+// ============================================================
 function drawWheel(){
-  svg.innerHTML="";
-  const root=document.createElementNS(NS,"g");
-  root.setAttribute("transform",`rotate(${rotation})`);
+  svg.innerHTML = "";
+  
+  // Outer Root Group for Zoom and Rotation
+  const root = document.createElementNS(NS, "g");
+  root.setAttribute("id", "wheelRootGroup");
+  root.setAttribute("transform", `scale(${currentZoom}) rotate(${rotation})`);
 
-  // RING 1 — 3 GUNAS
-  const gnodes=[
-    {name:"SATTVA",color:"#d4af37"},
-    {name:"RAJAS",color:"#c62828"},
-    {name:"TAMAS",color:"#37474f"}
+  // Ring Radii Architecture
+  // Center: 0 - 74
+  // Ring 1 (3 Gunas): 76 - 140
+  // Ring 2 (36 Qualities): 142 - 238
+  // Ring 3 (54 Life Expressions): 240 - 368
+  // Ring 4 (15 Awareness Elements): 370 - 460
+  // Halo: 470 - 478
+
+  // ---------- RING 1: 3 PRIMARY GUNAS (120° each) ----------
+  const gunaNodes = [
+    { name: "Sattva", guna: "Sattva", a1: 0, a2: 120, color: GUNA_BASE_COLORS.Sattva, id: "G001" },
+    { name: "Rajas",  guna: "Rajas",  a1: 120, a2: 240, color: GUNA_BASE_COLORS.Rajas, id: "G002" },
+    { name: "Tamas",  guna: "Tamas",  a1: 240, a2: 360, color: GUNA_BASE_COLORS.Tamas, id: "G003" }
   ];
-  gnodes.forEach((g,i)=>{
-    const a=i*120,b=a+120;
-    const p=document.createElementNS(NS,"path");
-    p.setAttribute("d",sector(72,116,a+1,b-1));p.setAttribute("fill",g.color);
-    p.setAttribute("stroke","#f7f1df");p.setAttribute("stroke-width",2);
-    p.classList.add("seg");p.dataset.layer="guna";p.dataset.name=g.name;
-    p.onclick=()=>show({name:g.name,layer:"guna",color:g.color});
+
+  gunaNodes.forEach((g) => {
+    const e = E.find(x => x.id === g.id);
+    const midA = (g.a1 + g.a2) / 2;
+    const p = document.createElementNS(NS, "path");
+    p.setAttribute("d", sectorPath(76, 140, g.a1 + 0.4, g.a2 - 0.4));
+    p.setAttribute("fill", g.color);
+    p.setAttribute("stroke", "#1A2530");
+    p.setAttribute("stroke-width", "1.5");
+    p.classList.add("seg");
+    p.dataset.id = g.id;
+    p.dataset.layer = "guna";
+    p.dataset.name = g.name;
+    p.dataset.guna = g.name;
+    
+    p.onclick = () => selectElement(e);
+    p.onmouseenter = (evt) => showTooltip(evt, e);
+    p.onmousemove = moveTooltip;
+    p.onmouseleave = hideTooltip;
+    
     root.appendChild(p);
-    root.appendChild(label(g.name,94,(a+b)/2,10,g.name==="SATTVA"?"#4a3500":"#fff"));
+
+    // Radial Text
+    const labelText = getDisplayLabel(e).toUpperCase();
+    const textColor = getContrastColor(g.color);
+    const textGroup = createRadialText(labelText, 108, midA, 13, textColor, "800", currentLang==="sa");
+    root.appendChild(textGroup);
   });
 
-  // RING 2 — 36 GUNA QUALITIES
-  const qualities=E.filter(x=>x.layer==="quality");
-  qualities.forEach((e,i)=>{
-    const a=i*10,b=a+10;
-    const p=document.createElementNS(NS,"path");
-    p.setAttribute("d",sector(120,198,a+.3,b-.3));p.setAttribute("fill",e.color);
-    p.setAttribute("stroke","#f7f1df");p.setAttribute("stroke-width",".7");
-    p.classList.add("seg");p.dataset.id=e.id;p.dataset.layer="quality";p.dataset.name=e.name;
-    p.onclick=()=>show(e);root.appendChild(p);
-    if(i%2===0)root.appendChild(label(e.name,159,(a+b)/2,5.1,e.guna==="Sattva"?"#4a3500":"#fff"));
+  // ---------- RING 2: 36 GUNA QUALITIES (10° each) ----------
+  const qualities = E.filter(x => x.ring === "quality");
+  qualities.forEach((e, i) => {
+    const a1 = i * 10;
+    const a2 = (i + 1) * 10;
+    const midA = (a1 + a2) / 2;
+    
+    // Choose harmonious color
+    let col = "#F4D03F";
+    if (e.guna === "Sattva") col = SATTVA_QUAL_COLORS[i % 12];
+    else if (e.guna === "Rajas") col = RAJAS_QUAL_COLORS[(i - 12) % 12];
+    else col = TAMAS_QUAL_COLORS[(i - 24) % 12];
+
+    const p = document.createElementNS(NS, "path");
+    p.setAttribute("d", sectorPath(142, 238, a1 + 0.3, a2 - 0.3));
+    p.setAttribute("fill", col);
+    p.setAttribute("stroke", "#1E293B");
+    p.setAttribute("stroke-width", "0.9");
+    p.classList.add("seg");
+    p.dataset.id = e.id;
+    p.dataset.layer = "quality";
+    p.dataset.name = e.english;
+    p.dataset.guna = e.guna;
+    
+    p.onclick = () => selectElement(e);
+    p.onmouseenter = (evt) => showTooltip(evt, e);
+    p.onmousemove = moveTooltip;
+    p.onmouseleave = hideTooltip;
+    
+    root.appendChild(p);
+
+    // All 36 labels clearly written radially!
+    const labelText = getDisplayLabel(e);
+    const textColor = getContrastColor(col);
+    const textGroup = createRadialText(labelText, 190, midA, 9.2, textColor, "700", currentLang==="sa");
+    root.appendChild(textGroup);
   });
 
-  // RING 3 — 54 LIFE EXPRESSIONS
-  const life=E.filter(x=>x.layer==="life");
-  life.forEach((e,i)=>{
-    const a=i*(360/54),b=(i+1)*(360/54);
-    const p=document.createElementNS(NS,"path");
-    p.setAttribute("d",sector(200,258,a+.22,b-.22));p.setAttribute("fill","#9a8350");
-    p.setAttribute("fill-opacity",".92");p.setAttribute("stroke","#f7f1df");p.setAttribute("stroke-width",".55");
-    p.classList.add("seg");p.dataset.id=e.id;p.dataset.layer="life";p.dataset.name=e.name;
-    p.onclick=()=>show(e);root.appendChild(p);
-    if(i%3===0)root.appendChild(label(e.name,229,(a+b)/2,4.2,"#fff"));
+  // ---------- RING 3: 54 LIFE EXPRESSIONS (6.6667° each) ----------
+  const life = E.filter(x => x.ring === "life");
+  const stepLife = 360 / 54;
+  life.forEach((e, i) => {
+    const a1 = i * stepLife;
+    const a2 = (i + 1) * stepLife;
+    const midA = (a1 + a2) / 2;
+    const col = LIFE_COLORS[i % LIFE_COLORS.length];
+
+    const p = document.createElementNS(NS, "path");
+    p.setAttribute("d", sectorPath(240, 368, a1 + 0.25, a2 - 0.25));
+    p.setAttribute("fill", col);
+    p.setAttribute("stroke", "#1E293B");
+    p.setAttribute("stroke-width", "0.75");
+    p.classList.add("seg");
+    p.dataset.id = e.id;
+    p.dataset.layer = "life";
+    p.dataset.name = e.english;
+    p.dataset.guna = (i < 18) ? "Sattva" : (i < 36) ? "Rajas" : "Tamas";
+    
+    p.onclick = () => selectElement(e);
+    p.onmouseenter = (evt) => showTooltip(evt, e);
+    p.onmousemove = moveTooltip;
+    p.onmouseleave = hideTooltip;
+    
+    root.appendChild(p);
+
+    // All 54 labels clearly written radially!
+    const labelText = getDisplayLabel(e);
+    const textColor = getContrastColor(col);
+    const textGroup = createRadialText(labelText, 304, midA, 7.6, textColor, "600", currentLang==="sa");
+    root.appendChild(textGroup);
   });
 
-  // RING 4 — 15 AWARENESS / STHITA-PRAJNA STAGES
-  const aw=E.filter(x=>x.layer==="awareness");
-  aw.forEach((e,i)=>{
-    const a=i*24,b=a+24;
-    const p=document.createElementNS(NS,"path");
-    p.setAttribute("d",sector(260,304,a+.5,b-.5));p.setAttribute("fill","#7651a7");
-    p.setAttribute("stroke","#f7f1df");p.setAttribute("stroke-width",".8");
-    p.classList.add("seg");p.dataset.id=e.id;p.dataset.layer="awareness";p.dataset.name=e.name;
-    p.onclick=()=>show(e);root.appendChild(p);
-    root.appendChild(label(e.name,282,(a+b)/2,4.3,"#fff"));
+  // ---------- RING 4: 15 AWARENESS ELEMENTS (24° each) ----------
+  const aw = E.filter(x => x.ring === "awareness");
+  const stepAw = 360 / 15;
+  aw.forEach((e, i) => {
+    const a1 = i * stepAw;
+    const a2 = (i + 1) * stepAw;
+    const midA = (a1 + a2) / 2;
+    const col = AWARENESS_COLORS[i % AWARENESS_COLORS.length];
+
+    const p = document.createElementNS(NS, "path");
+    p.setAttribute("d", sectorPath(370, 460, a1 + 0.4, a2 - 0.4));
+    p.setAttribute("fill", col);
+    p.setAttribute("stroke", "#1E293B");
+    p.setAttribute("stroke-width", "1.1");
+    p.classList.add("seg");
+    p.dataset.id = e.id;
+    p.dataset.layer = "awareness";
+    p.dataset.name = e.english;
+    
+    p.onclick = () => selectElement(e);
+    p.onmouseenter = (evt) => showTooltip(evt, e);
+    p.onmousemove = moveTooltip;
+    p.onmouseleave = hideTooltip;
+    
+    root.appendChild(p);
+
+    // All 15 labels clearly written radially!
+    const labelText = getDisplayLabel(e);
+    const textColor = getContrastColor(col);
+    const textGroup = createRadialText(labelText, 415, midA, 10.2, textColor, "700", currentLang==="sa");
+    root.appendChild(textGroup);
   });
 
-  const halo=document.createElementNS(NS,"circle");
-  halo.setAttribute("r",314);halo.setAttribute("fill","none");halo.setAttribute("stroke","#f9e27d");
-  halo.setAttribute("stroke-width","1.5");halo.setAttribute("stroke-dasharray","2 7");root.appendChild(halo);
+  // ---------- GUṆĀTĪTA HALO (CELESTIAL ORBIT) ----------
+  const halo = document.createElementNS(NS, "circle");
+  halo.setAttribute("r", 472);
+  halo.setAttribute("fill", "none");
+  halo.setAttribute("stroke", "#F9E27D");
+  halo.setAttribute("stroke-width", "1.6");
+  halo.setAttribute("stroke-dasharray", "3 8");
+  halo.setAttribute("opacity", "0.8");
+  root.appendChild(halo);
+
+  // Decorative Golden Micro Star points on Halo
+  for(let i=0; i<36; i++){
+    const pa = polar(472, i * 10);
+    const star = document.createElementNS(NS, "circle");
+    star.setAttribute("cx", pa[0]);
+    star.setAttribute("cy", pa[1]);
+    star.setAttribute("r", (i % 3 === 0) ? 2.8 : 1.5);
+    star.setAttribute("fill", "#F9E27D");
+    root.appendChild(star);
+  }
+
   svg.appendChild(root);
 
-  const c=document.createElementNS(NS,"circle");
-  c.setAttribute("r",68);c.setAttribute("fill","#f7f1df");c.setAttribute("stroke","#d4af37");c.setAttribute("stroke-width",3);svg.appendChild(c);
-  svg.appendChild(label("ĀTMAN",0,-1,20,"#5a4300"));
-  svg.appendChild(label("THE WITNESS",0,12,8,"#555"));
+  // ---------- CENTER MEDALLION: ĀTMAN (THE WITNESS) ----------
+  // Center is not rotated to keep Ātman always oriented
+  const centerG = document.createElementNS(NS, "g");
+  centerG.setAttribute("id", "centerAtmanGroup");
+  centerG.setAttribute("transform", `scale(${currentZoom})`);
+
+  // Outer glowing ring
+  const cOuter = document.createElementNS(NS, "circle");
+  cOuter.setAttribute("r", 74);
+  cOuter.setAttribute("fill", "#FDFCF7");
+  cOuter.setAttribute("stroke", "#D4AF37");
+  cOuter.setAttribute("stroke-width", "3.5");
+  cOuter.style.filter = "drop-shadow(0 0 18px rgba(212,175,55,0.65))";
+  cOuter.style.cursor = "pointer";
+  cOuter.onclick = () => selectElement(ATMAN, true);
+  cOuter.onmouseenter = (evt) => showTooltip(evt, ATMAN);
+  cOuter.onmousemove = moveTooltip;
+  cOuter.onmouseleave = hideTooltip;
+  centerG.appendChild(cOuter);
+
+  // Inner subtle ring
+  const cInner = document.createElementNS(NS, "circle");
+  cInner.setAttribute("r", 68);
+  cInner.setAttribute("fill", "none");
+  cInner.setAttribute("stroke", "#D4AF37");
+  cInner.setAttribute("stroke-width", "1");
+  cInner.setAttribute("stroke-dasharray", "2 4");
+  cInner.setAttribute("pointer-events", "none");
+  centerG.appendChild(cInner);
+
+  // Sacred Om symbol watermark
+  const omText = document.createElementNS(NS, "text");
+  omText.setAttribute("x", 0);
+  omText.setAttribute("y", -2);
+  omText.setAttribute("text-anchor", "middle");
+  omText.setAttribute("dominant-baseline", "central");
+  omText.setAttribute("font-size", 42);
+  omText.setAttribute("fill", "rgba(212,175,55,0.18)");
+  omText.setAttribute("font-family", "'Noto Serif Devanagari',serif");
+  omText.setAttribute("pointer-events", "none");
+  omText.textContent = "ॐ";
+  centerG.appendChild(omText);
+
+  // Sanskrit "आत्मन्"
+  const saText = document.createElementNS(NS, "text");
+  saText.setAttribute("x", 0);
+  saText.setAttribute("y", -18);
+  saText.setAttribute("text-anchor", "middle");
+  saText.setAttribute("font-size", 17);
+  saText.setAttribute("font-weight", "700");
+  saText.setAttribute("fill", "#6A1B9A");
+  saText.setAttribute("font-family", "'Noto Serif Devanagari',serif");
+  saText.setAttribute("pointer-events", "none");
+  saText.textContent = "आत्मन्";
+  centerG.appendChild(saText);
+
+  // English "ĀTMAN"
+  const enText = document.createElementNS(NS, "text");
+  enText.setAttribute("x", 0);
+  enText.setAttribute("y", 6);
+  enText.setAttribute("text-anchor", "middle");
+  enText.setAttribute("font-size", 18);
+  enText.setAttribute("font-weight", "800");
+  enText.setAttribute("fill", "#3C2E05");
+  enText.setAttribute("font-family", "'Cinzel',serif");
+  enText.setAttribute("letter-spacing", "0.08em");
+  enText.setAttribute("pointer-events", "none");
+  enText.textContent = "ĀTMAN";
+  centerG.appendChild(enText);
+
+  // Subtitle "THE WITNESS"
+  const subText = document.createElementNS(NS, "text");
+  subText.setAttribute("x", 0);
+  subText.setAttribute("y", 22);
+  subText.setAttribute("text-anchor", "middle");
+  subText.setAttribute("font-size", 7.5);
+  subText.setAttribute("font-weight", "700");
+  subText.setAttribute("fill", "#7D7250");
+  subText.setAttribute("font-family", "'Inter',sans-serif");
+  subText.setAttribute("letter-spacing", "0.15em");
+  subText.setAttribute("pointer-events", "none");
+  subText.textContent = "THE WITNESS";
+  centerG.appendChild(subText);
+
+  svg.appendChild(centerG);
+
   applyFilter();
+  highlightActiveElement();
 }
-function show(e){
-  const type=e.layer==="quality"?"GUNA QUALITY":e.layer==="life"?"LIFE EXPRESSION":e.layer==="awareness"?"AWARENESS PATH":"GUNA";
-  const ref=e.layer==="awareness"?"Bhagavad Gita 2.54–72 / Chapter 14":
-    e.name==="Food quality"||e.name==="Freshness"||e.name==="Nourishment"?"Bhagavad Gita 17.7–10":
-    e.name==="Speech"?"Bhagavad Gita 17.15":"Bhagavad Gita Chapters 2, 3, 14, 17 or 18 depending on context";
-  document.getElementById("detail").innerHTML=
-    `<span class="badge" style="background:${e.color||"#7651a7"};color:#fff">${type}</span>
-     <h2>${e.name}</h2>${e.sa?`<div style="color:#6a1b9a;font-size:18px">${e.sa}</div>`:""}
-     <p><b>Observe</b><br>Notice this as an experience, not as your identity.</p>
-     <div class="quote"><b>Gita connection</b><br>${ref}</div>
-     <div class="practice"><b>Practice</b><br>Pause → notice → identify attachment → choose consciously.</div>
-     <p><b>Reflection</b><br>“Am I observing this, or am I becoming this?”</p>`;
+
+// ============================================================
+// DETAIL PANEL & SELECTION
+// ============================================================
+function selectElement(e, isCenter=false){
+  activeElementId = e.id || "G000";
+  highlightActiveElement();
+  
+  const panel = document.getElementById("detail");
+  if(isCenter || e.id === "G000"){
+    panel.innerHTML = `
+      <span class="type-badge" style="background:#2E7D32">CENTER MEDALLION</span>
+      <h2>${e.english}</h2>
+      <div class="sa-text">${e.sanskrit || "आत्मन्"}</div>
+      <div class="verse-line">${e.verse} &nbsp;·&nbsp; <span class="src-badge ${e.sourceType}">${SRC_LABEL[e.sourceType]}</span></div>
+      <div class="field-label">The Witness Consciousness</div>
+      <p class="meaning">${e.meaning}</p>
+      <div class="quote-box"><b>Core Principle</b>The observed changes. The witness remains untouched.</div>
+      <div class="practice-box"><b>Practice</b>${e.practice}</div>
+      <p class="meaning" style="margin-top:16px; font-size:14px; color:#6B6046; font-style:italic;">
+        You are the quiet Knower of the field (Kṣetrajña, BG 13.2), not the changing states of the field.
+      </p>`;
+    return;
+  }
+
+  const typeLabel = { guna: "GUṆA ROOT", quality: "GUṆA QUALITY", life: "LIFE EXPRESSION", awareness: "AWARENESS STAGE" }[e.ring] || "ELEMENT";
+  const badgeColor = e.guna === "Sattva" ? "#D4AF37" : e.guna === "Rajas" ? "#C0392B" : e.guna === "Tamas" ? "#3E5871" : "#7A5FA8";
+
+  panel.innerHTML = `
+    <span class="type-badge" style="background:${badgeColor}">${typeLabel}</span>
+    ${e.guna ? `<span class="type-badge" style="background:${GUNA_BASE_COLORS[e.guna]}; color:${e.guna==='Sattva'?'#3C2E05':'#fff'}">${e.guna.toUpperCase()}</span>` : ""}
+    <h2>${e.english}</h2>
+    ${e.sanskrit ? `<div class="sa-text">${e.sanskrit} ${e.translit ? `<span style="font-size:16px; font-family:'Inter',sans-serif; color:#7D7250;">(${e.translit})</span>` : ""}</div>` : ""}
+    ${e.domain ? `<div class="verse-line" style="font-weight:600; color:#4B3F2F; margin-bottom:4px;">Domain: ${e.domain}</div>` : ""}
+    <div class="verse-line">
+      <span class="src-badge ${e.sourceType}">${SRC_LABEL[e.sourceType]}</span> &nbsp;${e.verse}
+    </div>
+    <div class="field-label">Psychological Meaning</div>
+    <p class="meaning">${e.meaning}</p>
+    <div class="practice-box"><b>Daily Reflection &amp; Practice</b>${e.practice}</div>
+    <div class="quote-box"><b>Sthita-prajña Inquiry</b>Observe this as an arising experience, not as your permanent identity. Ask: <em>“Am I observing this, or am I becoming this?”</em></div>
+  `;
 }
-function applyFilter(){
-  const q=document.getElementById("search").value.toLowerCase();
-  const f=document.getElementById("filter").value;
-  document.querySelectorAll("#wheelSvg .seg").forEach(p=>{
-    const e=E.find(x=>x.id===p.dataset.id);
-    let ok=p.dataset.name.toLowerCase().includes(q);
-    if(f==="Sattva"||f==="Rajas"||f==="Tamas")ok=ok&&(p.dataset.name.toUpperCase()===f.toUpperCase()||e?.guna===f);
-    if(f==="life")ok=ok&&p.dataset.layer==="life";
-    if(f==="awareness")ok=ok&&p.dataset.layer==="awareness";
-    p.style.opacity=ok?1:.12;
+
+function highlightActiveElement(){
+  document.querySelectorAll("#wheelSvg .seg").forEach(p => {
+    if(p.dataset.id === activeElementId){
+      p.classList.add("active");
+    } else {
+      p.classList.remove("active");
+    }
   });
 }
-function rotate(n){rotation+=n;drawWheel()}
-function resetWheel(){rotation=0;document.getElementById("search").value="";document.getElementById("filter").value="all";drawWheel()}
-document.getElementById("search").oninput=applyFilter;
-document.getElementById("filter").onchange=applyFilter;
-drawWheel();
 
-// 36-question V4 assessment: one item per Guna quality.
-const qs=[
-["I can see a situation clearly before reacting.","s"],["I value understanding over being right.","s"],
-["I can remain peaceful when circumstances change.","s"],["I try to speak truthfully.","s"],
-["I naturally care about others.","s"],["I notice and appreciate what is already present.","s"],
-["I can admit when I am wrong.","s"],["I can wait without becoming agitated.","s"],
-["I can feel content without needing more.","s"],["I act from devotion or sincere purpose.","s"],
-["I can forgive without replaying the event.","s"],["I can maintain a steady discipline.","s"],
-["I strongly want a particular outcome.","r"],["I am driven to achieve ambitious goals.","r"],
-["I measure myself by achievements.","r"],["I compare my performance with others.","r"],
-["Praise or recognition affects my choices.","r"],["I find it difficult to remain still mentally.","r"],
-["I become attached to people or outcomes.","r"],["I want to control what I possess.","r"],
-["My sense of self depends on success or status.","r"],["I worry when progress is uncertain.","r"],
-["I act quickly before thinking through consequences.","r"],["I keep pushing even when rest would be wiser.","r"],
-["I avoid learning things that challenge my assumptions.","t"],["I feel confused about what is right even when I have information.","t"],
-["I struggle to begin necessary tasks.","t"],["I postpone important work.","t"],
-["I sleep or withdraw more than I intend to.","t"],["I delay action even when I know what to do.","t"],
-["I neglect responsibilities when they become difficult.","t"],["I feel indifferent about consequences.","t"],
-["I get caught in stories that are not grounded in facts.","t"],["I avoid situations mainly because I feel afraid.","t"],
-["My anger can become destructive.","t"],["I repeat habits without consciously choosing them.","t"]
-];
-document.getElementById("questions").innerHTML=qs.map((q,i)=>
-  `<div class="question"><b>${i+1}. ${q[0]}</b><br><input class="range assess" data-g="${q[1]}" type="range" min="1" max="5" value="3"></div>`
-).join("");
+// ============================================================
+// TOOLTIPS
+// ============================================================
+const tooltip = document.getElementById("wheelTooltip");
+function showTooltip(evt, e){
+  tooltip.style.display = "block";
+  document.getElementById("ttTitle").textContent = e.english + (e.guna ? ` (${e.guna})` : "");
+  document.getElementById("ttSa").textContent = e.sanskrit ? (e.sanskrit + (e.translit ? ` · ${e.translit}` : "")) : "";
+  document.getElementById("ttVerse").textContent = e.verse || "";
+  document.getElementById("ttMeaning").textContent = e.meaning ? (e.meaning.substring(0, 110) + "…") : "";
+  moveTooltip(evt);
+}
+function moveTooltip(evt){
+  tooltip.style.left = (evt.clientX + 10) + "px";
+  tooltip.style.top = (evt.clientY - 15) + "px";
+}
+function hideTooltip(){
+  tooltip.style.display = "none";
+}
+
+// ============================================================
+// FILTERING & SEARCH
+// ============================================================
+function applyFilter(){
+  const q = document.getElementById("search").value.toLowerCase().trim();
+  const f = document.getElementById("filter").value;
+
+  document.querySelectorAll("#wheelSvg .seg").forEach(p => {
+    const name = (p.dataset.name || "").toLowerCase();
+    const e = E.find(x => x.id === p.dataset.id);
+    const sa = e ? (e.sanskrit || "").toLowerCase() : "";
+    const translit = e ? (e.translit || "").toLowerCase() : "";
+
+    let matchesSearch = !q || name.includes(q) || sa.includes(q) || translit.includes(q);
+    let matchesFilter = true;
+
+    if(f === "Sattva" || f === "Rajas" || f === "Tamas"){
+      matchesFilter = p.dataset.guna === f || p.dataset.name === f;
+    } else if(f === "guna" || f === "quality" || f === "life" || f === "awareness"){
+      matchesFilter = p.dataset.layer === f;
+    }
+
+    const ok = matchesSearch && matchesFilter;
+    p.style.opacity = ok ? 1 : 0.08;
+  });
+}
+
+document.getElementById("search").oninput = applyFilter;
+document.getElementById("filter").onchange = applyFilter;
+
+// ============================================================
+// WHEEL CONTROLS (ROTATE, ZOOM, RESET, LANGUAGE)
+// ============================================================
+function rotateWheel(deg){
+  rotation += deg;
+  drawWheel();
+}
+function zoomWheel(factor){
+  currentZoom = Math.min(2.5, Math.max(0.6, currentZoom * factor));
+  drawWheel();
+}
+function resetWheel(){
+  rotation = 0;
+  currentZoom = 1;
+  document.getElementById("search").value = "";
+  document.getElementById("filter").value = "all";
+  drawWheel();
+}
+function toggleLanguage(){
+  if(currentLang === "en"){
+    currentLang = "sa";
+    document.getElementById("langLabel").textContent = "संस्कृत";
+  } else if(currentLang === "sa"){
+    currentLang = "translit";
+    document.getElementById("langLabel").textContent = "IAST";
+  } else {
+    currentLang = "en";
+    document.getElementById("langLabel").textContent = "English";
+  }
+  drawWheel();
+}
+
+// ============================================================
+// ASSESSMENT MODULE (36 Questions)
+// ============================================================
+const qualities36 = E.filter(x => x.ring === "quality");
+const gunaKey = { Sattva: "s", Rajas: "r", Tamas: "t" };
+
+const customPrompts = {
+  "Clarity": "I can see situations clearly before reacting, without mental fog.",
+  "Wisdom": "I value deep understanding over merely proving I am right.",
+  "Peace": "I can remain peaceful even when external circumstances fluctuate.",
+  "Truthfulness": "I speak truthfully, kindly, and only when necessary.",
+  "Compassion": "I naturally care about others' wellbeing without seeking personal gain.",
+  "Gratitude": "I notice and appreciate what is already present in my life.",
+  "Humility": "I can admit when I am wrong without feeling threatened.",
+  "Patience": "I can wait for natural outcomes without becoming agitated.",
+  "Contentment": "I feel content with what I have without compulsive craving.",
+  "Devotion": "I act from sincere purpose rather than solely for a personal payoff.",
+  "Forgiveness": "I release grievances without replaying them obsessively.",
+  "Self-discipline": "I maintain healthy discipline once I commit to it.",
+  "Desire": "I strongly crave specific outcomes and struggle to let them go.",
+  "Ambition": "I am driven by relentless ambition to achieve more and more.",
+  "Achievement": "I measure my self-worth primarily by my productivity and achievements.",
+  "Competition": "I find myself constantly comparing my status and success with others.",
+  "Recognition": "Public praise and recognition strongly influence my choices.",
+  "Restlessness": "I find it difficult to sit quietly without needing constant stimulation.",
+  "Attachment": "I become deeply possessive of specific people or projected results.",
+  "Possessiveness": "I feel a strong urge to control and hoard what belongs to me.",
+  "Ego": "My sense of identity is heavily tied to success, pride, and being right.",
+  "Anxiety": "I worry anxiously whenever the future feels uncertain.",
+  "Impulsiveness": "I act quickly on impulse before thinking through long-term consequences.",
+  "Overactivity": "I keep pushing furiously even when rest and stillness would be wiser.",
+  "Ignorance": "I avoid learning truths that challenge my comfortable assumptions.",
+  "Confusion": "I feel bewildered about the right path even when facts are presented.",
+  "Inertia": "I feel a heavy internal resistance when trying to begin necessary tasks.",
+  "Laziness": "I postpone essential work and duties more than I would like.",
+  "Excessive sleep": "I use sleep or daydreaming to escape from demanding responsibilities.",
+  "Procrastination": "I delay action even when I already know exactly what needs to be done.",
+  "Neglect": "I neglect important responsibilities when they become difficult.",
+  "Apathy": "I feel numb and indifferent toward the consequences of my choices.",
+  "Delusion": "I get caught in mental stories and suspicions not grounded in reality.",
+  "Fear-driven avoidance": "I avoid challenging situations mainly because fear paralyzes me.",
+  "Destructive anger": "My anger occasionally flares into harsh, destructive reactions.",
+  "Unconscious habit": "I repeat old unhelpful habits on autopilot without conscious intent."
+};
+
+const qBox = document.getElementById("questions");
+qBox.innerHTML = qualities36.map((q, i) => `
+  <div class="question">
+    <b>${i + 1}. ${customPrompts[q.english] || q.meaning}</b>
+    <input class="range assess" data-g="${gunaKey[q.guna]}" type="range" min="1" max="5" value="3">
+    <div class="scale-labels"><span>1 — Rarely</span><span>3 — Sometimes</span><span>5 — Very Often</span></div>
+  </div>
+`).join("");
+
+let lastScores = null;
 
 function calculate(){
-  const scores={s:0,r:0,t:0},vals={s:[],r:[],t:[]};
-  document.querySelectorAll(".assess").forEach(x=>{scores[x.dataset.g]+=+x.value;vals[x.dataset.g].push(+x.value)});
-  lastScores={scores,vals};localStorage.setItem("guna108_scores",JSON.stringify(lastScores));
-  const total=scores.s+scores.r+scores.t,p=k=>Math.round(scores[k]/total*100);
-  document.getElementById("assessmentResult").innerHTML=
-    `<div class="metrics">
-      <div class="metric" style="background:#f0dc85;color:#4a3500"><b>Sattva</b><strong>${p("s")}%</strong></div>
-      <div class="metric" style="background:#c62828"><b>Rajas</b><strong>${p("r")}%</strong></div>
-      <div class="metric" style="background:#37474f"><b>Tamas</b><strong>${p("t")}%</strong></div>
+  const scores = { s: 0, r: 0, t: 0 }, vals = { s: [], r: [], t: [] };
+  document.querySelectorAll(".assess").forEach(x => {
+    scores[x.dataset.g] += +x.value;
+    vals[x.dataset.g].push(+x.value);
+  });
+  lastScores = { scores, vals };
+  try { localStorage.setItem("guna108_scores", JSON.stringify(lastScores)); } catch(e){}
+  
+  const total = scores.s + scores.r + scores.t;
+  const pct = k => Math.round((scores[k] / total) * 100);
+  
+  document.getElementById("assessmentResult").innerHTML = `
+    <div class="metrics3">
+      <div class="metric" style="background:${GUNA_BASE_COLORS.Sattva}; color:#3C2E05;">
+        <div class="k">Sattva (Clarity)</div>
+        <div class="v">${pct('s')}%</div>
+      </div>
+      <div class="metric" style="background:${GUNA_BASE_COLORS.Rajas}; color:#fff;">
+        <div class="k">Rajas (Drive)</div>
+        <div class="v">${pct('r')}%</div>
+      </div>
+      <div class="metric" style="background:${GUNA_BASE_COLORS.Tamas}; color:#fff;">
+        <div class="k">Tamas (Inertia)</div>
+        <div class="v">${pct('t')}%</div>
+      </div>
     </div>
-    <div class="practice"><b>Next:</b> Open <b>My Mandala</b>. Your 36 quality petals will reflect your answers.</div>`;
-  drawMandala();drawConflict();
+    <div class="quote-box" style="background:rgba(255,255,255,0.06); color:#fff; border-left:4px solid var(--sattva);">
+      <b>Gita Wisdom (BG 14.10)</b>
+      The guṇas continually fluctuate. This score reflects your current dynamic pattern, not your eternal identity. Ātman (The Witness) remains untouched.
+    </div>
+    <div class="practice-box">
+      <b>Next Step:</b> Open <b>My Mandala</b> to see your 36 petals visualized, or <b>Inner Conflict</b> to explore what is currently pulling on your mind.
+    </div>
+  `;
+  
+  drawMandala();
+  drawConflict();
 }
+
+// ============================================================
+// MANDALA VIEW
+// ============================================================
 function drawMandala(){
-  if(!lastScores)return;
-  const m=document.getElementById("mandalaSvg");m.innerHTML="";
-  const cols=["#d4af37","#c62828","#37474f"],vals=[lastScores.vals.s,lastScores.vals.r,lastScores.vals.t];
-  let qi=0;
-  for(let g=0;g<3;g++)for(let j=0;j<12;j++){
-    const v=vals[g][j]||3,r=78+v*24,a=qi*10,b=a+8,A=polar(70,a),B=polar(r,a),C=polar(r,b),D=polar(70,b);
-    const p=document.createElementNS(NS,"path");
-    p.setAttribute("d",`M${A[0]},${A[1]}L${B[0]},${B[1]}A${r},${r} 0 0 1 ${C[0]},${C[1]}L${D[0]},${D[1]}Z`);
-    p.setAttribute("fill",cols[g]);p.setAttribute("stroke","#f7f1df");p.setAttribute("stroke-width",1);m.appendChild(p);qi++;
+  if(!lastScores) return;
+  const m = document.getElementById("mandalaSvg");
+  m.innerHTML = "";
+  
+  const cols = [GUNA_BASE_COLORS.Sattva, GUNA_BASE_COLORS.Rajas, GUNA_BASE_COLORS.Tamas];
+  const valArrays = [lastScores.vals.s, lastScores.vals.r, lastScores.vals.t];
+  let qi = 0;
+
+  // Personalized 36 Petals
+  for(let g = 0; g < 3; g++){
+    for(let j = 0; j < 12; j++){
+      const v = valArrays[g][j] || 3;
+      const r1 = 76;
+      const r2 = 76 + v * 32; // Petal length proportional to score
+      const a1 = qi * 10;
+      const a2 = a1 + 8.5;
+      
+      const p = document.createElementNS(NS, "path");
+      p.setAttribute("d", sectorPath(r1, r2, a1, a2));
+      p.setAttribute("fill", cols[g]);
+      p.setAttribute("fill-opacity", "0.88");
+      p.setAttribute("stroke", "#FFFDF6");
+      p.setAttribute("stroke-width", "1");
+      m.appendChild(p);
+      qi++;
+    }
   }
-  for(let i=0;i<54;i++){const a=i*(360/54),p=polar(240,a),c=document.createElementNS(NS,"circle");c.setAttribute("cx",p[0]);c.setAttribute("cy",p[1]);c.setAttribute("r",4);c.setAttribute("fill","#9a8350");m.appendChild(c)}
-  for(let i=0;i<15;i++){const a=i*24,p=polar(300,a),c=document.createElementNS(NS,"circle");c.setAttribute("cx",p[0]);c.setAttribute("cy",p[1]);c.setAttribute("r",5);c.setAttribute("fill","#7651a7");m.appendChild(c)}
-  const c=document.createElementNS(NS,"circle");c.setAttribute("r",64);c.setAttribute("fill","#f7f1df");c.setAttribute("stroke","#d4af37");c.setAttribute("stroke-width",3);m.appendChild(c);
-  m.appendChild(label("ĀTMAN",0,-1,20,"#5a4300"));m.appendChild(label("THE WITNESS",0,12,8,"#555"));
-  document.getElementById("mandalaInfo").innerHTML=
-    `<h2>Personalized Guna Mandala</h2>
-     <p><b>Sattva:</b> ${lastScores.scores.s}/60<br><b>Rajas:</b> ${lastScores.scores.r}/60<br><b>Tamas:</b> ${lastScores.scores.t}/60</p>
-     <div class="quote">The 36 quality petals are personalized. The 54 life expressions and 15 awareness stages remain the structural context.</div>
-     <div class="practice"><b>Direction</b><br>Observe the changing patterns without turning them into identity.</div>`;
+
+  // Outer Structural Elements (54 Life + 15 Awareness)
+  for(let i=0; i<54; i++){
+    const pa = polar(260, i * (360/54));
+    const c = document.createElementNS(NS, "circle");
+    c.setAttribute("cx", pa[0]); c.setAttribute("cy", pa[1]);
+    c.setAttribute("r", 3.6); c.setAttribute("fill", "#9A8350");
+    c.setAttribute("opacity", "0.75");
+    m.appendChild(c);
+  }
+  for(let i=0; i<15; i++){
+    const pa = polar(295, i * 24);
+    const c = document.createElementNS(NS, "circle");
+    c.setAttribute("cx", pa[0]); c.setAttribute("cy", pa[1]);
+    c.setAttribute("r", 5.2); c.setAttribute("fill", "#7651A7");
+    m.appendChild(c);
+  }
+
+  // Center Ātman
+  const c = document.createElementNS(NS, "circle");
+  c.setAttribute("r", 72); c.setAttribute("fill", "#FDFCF7");
+  c.setAttribute("stroke", "#D4AF37"); c.setAttribute("stroke-width", "3");
+  m.appendChild(c);
+
+  const t1 = document.createElementNS(NS, "text");
+  t1.setAttribute("x", 0); t1.setAttribute("y", -6);
+  t1.setAttribute("text-anchor", "middle"); t1.setAttribute("font-size", "18");
+  t1.setAttribute("font-weight", "800"); t1.setAttribute("fill", "#3C2E05");
+  t1.setAttribute("font-family", "'Cinzel',serif");
+  t1.textContent = "ĀTMAN";
+  m.appendChild(t1);
+
+  const t2 = document.createElementNS(NS, "text");
+  t2.setAttribute("x", 0); t2.setAttribute("y", 14);
+  t2.setAttribute("text-anchor", "middle"); t2.setAttribute("font-size", "7.5");
+  t2.setAttribute("font-weight", "700"); t2.setAttribute("fill", "#7D7250");
+  t2.setAttribute("font-family", "'Inter',sans-serif");
+  t2.setAttribute("letter-spacing", "0.12em");
+  t2.textContent = "THE WITNESS";
+  m.appendChild(t2);
+
+  const s = lastScores.scores;
+  document.getElementById("mandalaInfo").innerHTML = `
+    <span class="type-badge" style="background:#5A6B8C">PERSONALIZED MANDALA</span>
+    <h2>Your Energy Pattern</h2>
+    <p class="meaning"><b>Sattva:</b> ${s.s}/60 &nbsp;·&nbsp; <b>Rajas:</b> ${s.r}/60 &nbsp;·&nbsp; <b>Tamas:</b> ${s.t}/60</p>
+    <div class="quote-box"><b>How to Read It:</b> Longer petals show where each quality currently registers. The outer bronze and violet dots are the 54 life expressions and 15 awareness stages — your constant structural environment.</div>
+    <div class="practice-box"><b>Direction:</b> Notice your pattern with compassionate detachment. Retake this assessment in a week to observe shifts.</div>
+  `;
 }
+
+// ============================================================
+// INNER CONFLICT ENGINE
+// ============================================================
 function drawConflict(){
-  if(!lastScores)return;
-  const s=lastScores.scores;let title,body;
-  if(s.s>=s.r&&s.s>=s.t){title="Sattva ↔ Rajas";body="Dharma / clarity ↔ achievement / recognition";}
-  else if(s.r>=s.t){title="Rajas ↔ Tamas";body="Desire / activity ↔ inertia / avoidance";}
-  else{title="Sattva ↔ Tamas";body="Discipline / clarity ↔ inertia / withdrawal";}
-  document.getElementById("conflictBox").innerHTML=
-    `<h3>${title}</h3><p>${body}</p><div class="quote"><b>Ask:</b> What force is pulling me right now?</div>
-     <div class="practice"><b>Choose:</b> Pause → identify attachment → act consciously → release the result.</div>`;
+  if(!lastScores) return;
+  const s = lastScores.scores;
+  const sorted = Object.entries(s).sort((a,b)=>b[1]-a[1]);
+  const [top, second] = sorted;
+  const pairKey = [top[0], second[0]].sort().join("");
+
+  const pairs = {
+    "rs": { title: "Sattva ↔ Rajas", body: "Dharmic clarity is pulling in one direction, while ambition and achievement pull in another.", ask: "Is what I am about to do driven by what is right (Śreyas), or by what will bring personal applause (Preyas)?" },
+    "st": { title: "Sattva ↔ Tamas", body: "Disciplined clarity is urging action, while inertia and comfort-seeking urge withdrawal.", ask: "Am I giving myself genuine rejuvenation, or am I avoiding a duty I already know I should face?" },
+    "rt": { title: "Rajas ↔ Tamas", body: "Restless desire pushes to act frantically, while fatigue and overwhelm push toward procrastination.", ask: "Am I acting from grounded purpose, or merely thrashing to escape uncomfortable feelings?" }
+  };
+
+  const conf = pairs[pairKey] || { title: "Sattva Predominance", body: "Clarity currently leads your energy — the subtle test now is avoiding pride or attachment to feeling virtuous (BG 14.6).", ask: "Am I acting because it is my duty, or because it allows me to feel spiritually superior?" };
+
+  document.getElementById("conflictBox").innerHTML = `
+    <h3 style="margin:0 0 8px; font-family:'Cinzel',serif; color:var(--sattva); font-size:22px;">${conf.title}</h3>
+    <p style="margin:0 0 12px; font-size:16px; line-height:1.5;">${conf.body}</p>
+    <div class="quote-box" style="margin:10px 0; font-size:15px;"><b>Key Inquiry</b>${conf.ask}</div>
+    <div class="practice-box"><b>Conscious Choice:</b> Pause (Virāma) → Notice attachment → Act from duty (Svadharma) → Surrender the fruit (BG 2.47).</div>
+  `;
 }
+
+// ============================================================
+// LIFESTYLE 6 PILLARS
+// ============================================================
+const pillars = [
+  { key:"ahara", name:"Āhāra", sa:"Food & Eating", q:"Did my food choices support nourishment, vitality, and awareness?", ref:"BG 17.7–10" },
+  { key:"sarira", name:"Śarīra", sa:"Body & Discipline", q:"Did I care for the body with moderation, cleanliness, and steadiness?", ref:"BG 17.14, 6.16–17" },
+  { key:"vak", name:"Vāk", sa:"Speech", q:"Was my speech truthful, beneficial, affectionate, and non-agitating?", ref:"BG 17.15" },
+  { key:"manas", name:"Manas", sa:"Mind & Serenity", q:"Did I pause to observe a thought or reaction before obeying it?", ref:"BG 17.16, 2.62–63" },
+  { key:"karma", name:"Karma", sa:"Work & Action", q:"Did I perform duty with full excellence, releasing anxious attachment to fruits?", ref:"BG 2.47, 18.23" },
+  { key:"dharma", name:"Dharma / Seva", sa:"Duty & Service", q:"Did I serve someone selflessly and fulfill my natural duty today?", ref:"BG 3.35, 18.46" }
+];
+
+const lifestyleBody = document.getElementById("lifestyleBody");
+lifestyleBody.innerHTML = pillars.map(p => `
+  <tr>
+    <td>
+      <div class="pillar-name">${p.name}</div>
+      <div class="pillar-sa">${p.sa} · ${p.ref}</div>
+    </td>
+    <td style="font-size:14.5px; line-height:1.4;">${p.q}</td>
+    <td>
+      <input type="range" min="1" max="5" value="3" class="lifestyle-slider" data-key="${p.key}">
+      <div class="scale-labels"><span>1</span><span>3</span><span>5</span></div>
+    </td>
+  </tr>
+`).join("");
+
+function saveLifestyle(){
+  const entry = { date: new Date().toISOString() };
+  document.querySelectorAll(".lifestyle-slider").forEach(s => { entry[s.dataset.key] = +s.value; });
+  let log = [];
+  try { log = JSON.parse(localStorage.getItem("guna108_lifestyle")) || []; } catch(e){}
+  log.push(entry);
+  try { localStorage.setItem("guna108_lifestyle", JSON.stringify(log)); } catch(e){}
+
+  const avg = pillars.reduce((a, p) => a + entry[p.key], 0) / pillars.length;
+  document.getElementById("lifestyleResult").innerHTML = `
+    <div class="quote-box" style="background:rgba(212,175,55,0.15); color:#fff; border-left:4px solid var(--sattva);">
+      <b>Daily Reflection Average: ${avg.toFixed(1)} / 5</b>
+      This is an awareness indicator, not a spiritual grade. What attachment from today's work can you consciously surrender before sleep?
+    </div>
+  `;
+}
+
+// ============================================================
+// ĀHĀRA MODULE (3 MODES)
+// ============================================================
+const aharaContent = {
+  gita: `
+    <div class="metrics3">
+      <div class="metric" style="background:${GUNA_BASE_COLORS.Sattva}; color:#3C2E05;">
+        <div class="k">Sattvic (BG 17.8)</div>
+        <div style="font-size:14px; margin-top:6px; font-weight:600;">Nourishing, juicy, wholesome, promotes vitality, longevity &amp; joy</div>
+      </div>
+      <div class="metric" style="background:${GUNA_BASE_COLORS.Rajas}; color:#fff;">
+        <div class="k">Rajasic (BG 17.9)</div>
+        <div style="font-size:14px; margin-top:6px; font-weight:600;">Excessively bitter, sour, salty, hot, pungent, burning; causes distress</div>
+      </div>
+      <div class="metric" style="background:${GUNA_BASE_COLORS.Tamas}; color:#fff;">
+        <div class="k">Tamasic (BG 17.10)</div>
+        <div style="font-size:14px; margin-top:6px; font-weight:600;">Stale, tasteless, decomposed, leftover or impure; brings lethargy</div>
+      </div>
+    </div>
+    <div class="quote-box" style="background:rgba(255,255,255,0.05); color:#fff; border-left:4px solid var(--sattva);">
+      <b>Gita-Only Scripture Mode</b>
+      This mode relies exclusively on explicit qualities named in BG 17.7–10. It does not fabricate modern diet rules, calorie targets, fasting schedules, or claims that modern foods are individually classified in scripture.
+    </div>
+  `,
+  traditional: `
+    <div class="quote-box" style="background:rgba(255,255,255,0.05); color:#fff; border-left:4px solid var(--traditional);">
+      <b>Traditional Commentarial &amp; Āyurvedic Interpretation</b>
+      Traditional commentaries often correlate fresh seasonal fruits, whole grains, and pure dairy with Sattva; excessively heating or pungent spices with Rajas; and fermented, overly aged, or stale foods with Tamas.
+    </div>
+    <p class="meaning" style="color:rgba(237,231,211,0.85);">
+      Every item in this mode is presented as a traditional commentary framework — never as direct Gita scripture.
+    </p>
+  `,
+  modern: `
+    <div class="quote-box" style="background:rgba(255,255,255,0.05); color:#fff; border-left:4px solid var(--modern);">
+      <b>Modern Nutritional Science Guidance</b>
+      Focuses on macronutrient balance, micronutrients, hydration, whole foods, and gut health.
+    </div>
+    <p class="meaning" style="color:rgba(237,231,211,0.85);">
+      This guidance is intentionally kept distinct from scriptural verses to maintain absolute theological clarity. Guna108 is not a medical nutrition service.
+    </p>
+  `
+};
+
+function setAharaMode(mode){
+  document.querySelectorAll(".mode-btn").forEach(b => {
+    const isAct = b.dataset.mode === mode;
+    b.classList.toggle("active", isAct);
+    b.style.background = isAct ? "var(--sattva)" : "rgba(255,255,255,0.07)";
+    b.style.color = isAct ? "var(--sattva-ink)" : "#fff";
+    b.style.border = isAct ? "1px solid var(--sattva)" : "1px solid var(--line)";
+  });
+  document.getElementById("aharaModeContent").innerHTML = aharaContent[mode];
+}
+setAharaMode("gita");
+
 function saveMeal(){
-  const f=+document.getElementById("fresh").value,n=+document.getElementById("nour").value,i=+document.getElementById("intense").value,a=+document.getElementById("aware").value;
-  const msg=(f+n+a-i>=9)?"Your reflection points toward qualities described in BG 17.8: nourishment, vitality, health, happiness and satisfaction.":"Use the meal as an observation practice. Notice freshness, nourishment, intensity and awareness without food guilt.";
-  document.getElementById("mealResult").textContent=msg;
-  localStorage.setItem("guna108_meal",JSON.stringify({f,n,i,a,date:new Date().toISOString()}));
+  const f = +document.getElementById("fresh").value;
+  const n = +document.getElementById("nour").value;
+  const i = +document.getElementById("intense").value;
+  const a = +document.getElementById("aware").value;
+  const motivation = document.getElementById("motivation").value;
+  const score = f + n + a - i;
+
+  const msg = score >= 9
+    ? "Your meal reflection strongly aligns with BG 17.8 qualities: nourishing, fresh, wholesome, and sustaining vitality."
+    : score <= 3
+      ? "Your meal leans toward stimulating or heavy qualities (BG 17.9–10). Use this as gentle observation without food guilt — choose consciously next time."
+      : "A balanced, mixed pattern. Notice what supported clarity and what caused mild heaviness.";
+
+  const box = document.getElementById("mealResult");
+  box.style.display = "block";
+  box.innerHTML = `<b>Āhāra Observation</b>${msg}`;
 }
-document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{
-  document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));
-  b.classList.add("active");
-  document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
-  document.getElementById(b.dataset.view).classList.add("active");
-  if(b.dataset.view==="mandala"&&lastScores)drawMandala();
+
+// ============================================================
+// NAVIGATION TABS
+// ============================================================
+document.querySelectorAll("nav.tabs button").forEach(b => {
+  b.onclick = () => {
+    document.querySelectorAll("nav.tabs button").forEach(x => x.classList.remove("active"));
+    b.classList.add("active");
+    document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+    document.getElementById(b.dataset.view).classList.add("active");
+    if(b.dataset.view === "mandala" && lastScores) drawMandala();
+  };
 });
-try{const saved=JSON.parse(localStorage.getItem("guna108_scores"));if(saved){lastScores=saved;drawMandala();drawConflict()}}catch(e){}
+
+// Load saved scores if available
+try {
+  const saved = JSON.parse(localStorage.getItem("guna108_scores"));
+  if(saved){
+    lastScores = saved;
+    drawMandala();
+    drawConflict();
+  }
+} catch(e){}
+
+// Initial render
+drawWheel();
+selectElement(ATMAN, true);
+
 </script>
 </body>
 </html>

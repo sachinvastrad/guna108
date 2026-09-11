@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guna108 — Museum Wheel V5.3</title>
+<style>
+:root{--navy:#071522;--ivory:#f7f1df;--ink:#241f19;--gold:#d4af37;--rajas:#c62828;--tamas:#37474f;--purple:#7651a7;--bronze:#9a8350}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% -10%,#20456e 0,#071522 58%);font-family:Inter,system-ui,Arial,sans-serif;color:#fff}
+header{text-align:center;padding:20px;border-bottom:1px solid #ffffff18}h1{margin:0;color:#f9e27d}header p{margin:6px 0;opacity:.8}
+nav{position:sticky;top:0;z-index:10;display:flex;justify-content:center;gap:7px;flex-wrap:wrap;padding:10px;background:#06111ef2;backdrop-filter:blur(8px)}
+nav button,.toolbar button{border:1px solid #ffffff20;background:#ffffff0b;color:#fff;border-radius:10px;padding:9px 12px;font-weight:700;cursor:pointer}
+nav button.active,.primary{background:#d4af37!important;color:#332500!important}
+main{max-width:1320px;margin:auto;padding:18px}.view{display:none}.view.active{display:block}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:16px}.card{background:var(--ivory);color:var(--ink);border-radius:18px;padding:17px;box-shadow:0 18px 45px #0004}
+.dark{background:#ffffff08;border:1px solid #ffffff15;border-radius:18px;padding:12px}
+.toolbar{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:8px}input,select{padding:9px;border-radius:9px;border:1px solid #d8cba8;background:#fff}
+svg{width:100%;height:auto;display:block}.seg{cursor:pointer;transition:opacity .15s,filter .15s}.seg:hover{filter:brightness(1.18)}
+.small{font-size:12px;opacity:.72}.legend{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;padding:8px}.legend span{font-size:12px}.dot{width:11px;height:11px;border-radius:50%;display:inline-block;margin-right:4px}
+.badge{display:inline-block;padding:6px 10px;border-radius:999px;font-size:11px;font-weight:800}.quote{background:#fff3c9;padding:12px;border-left:4px solid var(--gold);border-radius:8px;margin:10px 0}.practice{background:#e8f5e9;padding:12px;border-radius:8px;margin:10px 0}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.metric{padding:12px;border-radius:12px;background:#ffffff0b}.metric strong{display:block;font-size:24px;color:#f9e27d}
+.question{background:#fff;color:#222;border:1px solid #e1d5b5;border-radius:12px;padding:12px;margin:9px 0}.range{width:100%}
+table{width:100%;border-collapse:collapse;background:#fff;color:#222}th,td{padding:9px;border-bottom:1px solid #e7dcc2;text-align:left}th{background:#eee5ce}
+@media(max-width:950px){.grid{grid-template-columns:1fr}}@media(max-width:650px){main{padding:9px}.metrics{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><h1>☸ Guna108</h1><p>From Guna Awareness → Self-Awareness → Sthita-prajña</p></header>
+<nav>
+<button class="active" data-view="wheel">Museum Wheel</button>
+<button data-view="assessment">Assessment</button>
+<button data-view="mandala">My Mandala</button>
+<button data-view="conflict">Inner Conflict</button>
+<button data-view="lifestyle">Guna Lifestyle</button>
+<button data-view="ahara">Āhāra</button>
+</nav>
+<main>
+
+<section id="wheel" class="view active">
+<div class="grid">
+<div class="dark">
+<div class="toolbar">
+<input id="search" placeholder="Search any element…">
+<select id="filter">
+<option value="all">All 108</option><option>Sattva</option><option>Rajas</option><option>Tamas</option>
+<option value="life">54 Life expressions</option><option value="awareness">15 Awareness stages</option>
+</select>
+<button onclick="rotate(-10)">↶ Rotate</button><button onclick="rotate(10)">Rotate ↷</button>
+<button onclick="resetWheel()">Reset</button>
+</div>
+<svg id="wheelSvg" viewBox="-330 -330 660 660" aria-label="Guna108 concentric wheel"></svg>
+<div class="legend">
+<span><i class="dot" style="background:#d4af37"></i>Sattva</span>
+<span><i class="dot" style="background:#c62828"></i>Rajas</span>
+<span><i class="dot" style="background:#37474f"></i>Tamas</span>
+<span><i class="dot" style="background:#9a8350"></i>Life</span>
+<span><i class="dot" style="background:#7651a7"></i>Awareness</span>
+</div>
+<div class="small">Canonical architecture: 3 Guna nodes + 36 qualities + 54 life expressions + 15 awareness stages = 108. Ātman is the separate center.</div>
+</div>
+<div class="card" id="detail">
+<span class="badge" style="background:#d4af37;color:#4a3500">CENTER</span>
+<h2>ĀTMAN</h2><p>Pure Witness / Consciousness</p>
+<div class="quote"><b>Design principle</b><br>The observed changes. The witness remains.</div>
+<p>Click any segment to explore it.</p>
+</div>
+</div>
+</section>
+
+<section id="assessment" class="view">
+<div class="card">
+<h2>36-Question Self-Awareness Assessment</h2>
+<p>Rate each statement from 1 (rarely) to 5 (very often). This describes current response patterns; it does not define your identity.</p>
+<div id="questions"></div>
+<button class="primary" onclick="calculate()">Generate Personalized Mandala</button>
+<div id="assessmentResult" style="margin-top:14px"></div>
+</div>
+</section>
+
+<section id="mandala" class="view">
+<div class="grid">
+<div class="dark"><svg id="mandalaSvg" viewBox="-330 -330 660 660"></svg></div>
+<div class="card" id="mandalaInfo"><h2>Personalized Guna Mandala</h2><p>Complete the 36-question assessment.</p></div>
+</div>
+</section>
+
+<section id="conflict" class="view">
+<div class="card"><h2>Inner Conflict Engine</h2><p>Observe the competing tendencies without turning them into identity.</p>
+<div id="conflictBox" class="quote">Complete the assessment first.</div>
+</div>
+</section>
+
+<section id="lifestyle" class="view">
+<div class="card">
+<h2>Guna Lifestyle System</h2>
+<p>Six practical reflection pillars inspired by Gita themes. This exact six-pillar taxonomy is a product framework, not a direct Gita quotation.</p>
+<table><thead><tr><th>Pillar</th><th>Daily reflection</th><th>1–5</th></tr></thead><tbody>
+<tr><td><b>Āhāra</b><br>Food & Eating</td><td>Did my food support nourishment, clarity and awareness?</td><td><input type="range" min="1" max="5"></td></tr>
+<tr><td><b>Śarīra</b><br>Body & Discipline</td><td>Did I care for the body with steadiness?</td><td><input type="range" min="1" max="5"></td></tr>
+<tr><td><b>Vāk</b><br>Speech</td><td>Was my speech truthful, beneficial and restrained?</td><td><input type="range" min="1" max="5"></td></tr>
+<tr><td><b>Manas</b><br>Mind</td><td>Did I notice thoughts before reacting?</td><td><input type="range" min="1" max="5"></td></tr>
+<tr><td><b>Karma</b><br>Action</td><td>Did I act sincerely without unhealthy result-attachment?</td><td><input type="range" min="1" max="5"></td></tr>
+<tr><td><b>Dharma / Seva</b><br>Duty & Service</td><td>Did I fulfill duty and serve consciously?</td><td><input type="range" min="1" max="5"></td></tr>
+</tbody></table>
+</div>
+</section>
+
+<section id="ahara" class="view">
+<div class="card">
+<h2>Āhāra — Gita Food & Habit Module</h2>
+<p><b>Gita-only mode:</b> uses the food qualities in BG 17.7–10. It does not invent calorie, macro or medical prescriptions.</p>
+<div class="metrics">
+<div class="metric" style="background:#f0dc85;color:#4a3500"><b>Sattvic</b><strong>17.8</strong>Nourishing / vital / pleasing</div>
+<div class="metric" style="background:#c62828"><b>Rajasic</b><strong>17.9</strong>Excessively stimulating</div>
+<div class="metric" style="background:#37474f"><b>Tamasic</b><strong>17.10</strong>Stale / depleted / impure</div>
+</div>
+<h3>Meal reflection</h3>
+<div class="question">Freshness <input class="range" id="fresh" type="range" min="1" max="5" value="4"></div>
+<div class="question">Nourishment <input class="range" id="nour" type="range" min="1" max="5" value="4"></div>
+<div class="question">Intensity <input class="range" id="intense" type="range" min="1" max="5" value="2"></div>
+<div class="question">Awareness <input class="range" id="aware" type="range" min="1" max="5" value="4"></div>
+<button class="primary" onclick="saveMeal()">Save Āhāra Reflection</button>
+<div id="mealResult" class="practice"></div>
+<p class="small">Specific modern foods beyond the explicit Gita qualities must be labeled separately as traditional interpretation or modern nutrition.</p>
+</div>
+</section>
+</main>
+
+<script>
+const E=[{"layer": "guna", "guna": "Sattva", "name": "Sattva", "sa": "सत्त्व", "color": "#D4AF37", "id": "G001"}, {"layer": "quality", "guna": "Sattva", "name": "Clarity", "color": "#D4AF37", "id": "G002"}, {"layer": "quality", "guna": "Sattva", "name": "Wisdom", "color": "#D4AF37", "id": "G003"}, {"layer": "quality", "guna": "Sattva", "name": "Peace", "color": "#D4AF37", "id": "G004"}, {"layer": "quality", "guna": "Sattva", "name": "Truthfulness", "color": "#D4AF37", "id": "G005"}, {"layer": "quality", "guna": "Sattva", "name": "Compassion", "color": "#D4AF37", "id": "G006"}, {"layer": "quality", "guna": "Sattva", "name": "Gratitude", "color": "#D4AF37", "id": "G007"}, {"layer": "quality", "guna": "Sattva", "name": "Humility", "color": "#D4AF37", "id": "G008"}, {"layer": "quality", "guna": "Sattva", "name": "Patience", "color": "#D4AF37", "id": "G009"}, {"layer": "quality", "guna": "Sattva", "name": "Contentment", "color": "#D4AF37", "id": "G010"}, {"layer": "quality", "guna": "Sattva", "name": "Devotion", "color": "#D4AF37", "id": "G011"}, {"layer": "quality", "guna": "Sattva", "name": "Forgiveness", "color": "#D4AF37", "id": "G012"}, {"layer": "quality", "guna": "Sattva", "name": "Self-discipline", "color": "#D4AF37", "id": "G013"}, {"layer": "guna", "guna": "Rajas", "name": "Rajas", "sa": "रजस्", "color": "#C62828", "id": "G014"}, {"layer": "quality", "guna": "Rajas", "name": "Desire", "color": "#C62828", "id": "G015"}, {"layer": "quality", "guna": "Rajas", "name": "Ambition", "color": "#C62828", "id": "G016"}, {"layer": "quality", "guna": "Rajas", "name": "Achievement", "color": "#C62828", "id": "G017"}, {"layer": "quality", "guna": "Rajas", "name": "Competition", "color": "#C62828", "id": "G018"}, {"layer": "quality", "guna": "Rajas", "name": "Recognition", "color": "#C62828", "id": "G019"}, {"layer": "quality", "guna": "Rajas", "name": "Restlessness", "color": "#C62828", "id": "G020"}, {"layer": "quality", "guna": "Rajas", "name": "Attachment", "color": "#C62828", "id": "G021"}, {"layer": "quality", "guna": "Rajas", "name": "Possessiveness", "color": "#C62828", "id": "G022"}, {"layer": "quality", "guna": "Rajas", "name": "Ego", "color": "#C62828", "id": "G023"}, {"layer": "quality", "guna": "Rajas", "name": "Anxiety", "color": "#C62828", "id": "G024"}, {"layer": "quality", "guna": "Rajas", "name": "Impulsiveness", "color": "#C62828", "id": "G025"}, {"layer": "quality", "guna": "Rajas", "name": "Overactivity", "color": "#C62828", "id": "G026"}, {"layer": "guna", "guna": "Tamas", "name": "Tamas", "sa": "तमस्", "color": "#37474F", "id": "G027"}, {"layer": "quality", "guna": "Tamas", "name": "Ignorance", "color": "#37474F", "id": "G028"}, {"layer": "quality", "guna": "Tamas", "name": "Confusion", "color": "#37474F", "id": "G029"}, {"layer": "quality", "guna": "Tamas", "name": "Inertia", "color": "#37474F", "id": "G030"}, {"layer": "quality", "guna": "Tamas", "name": "Laziness", "color": "#37474F", "id": "G031"}, {"layer": "quality", "guna": "Tamas", "name": "Excessive sleep", "color": "#37474F", "id": "G032"}, {"layer": "quality", "guna": "Tamas", "name": "Procrastination", "color": "#37474F", "id": "G033"}, {"layer": "quality", "guna": "Tamas", "name": "Neglect", "color": "#37474F", "id": "G034"}, {"layer": "quality", "guna": "Tamas", "name": "Apathy", "color": "#37474F", "id": "G035"}, {"layer": "quality", "guna": "Tamas", "name": "Delusion", "color": "#37474F", "id": "G036"}, {"layer": "quality", "guna": "Tamas", "name": "Fear-driven avoidance", "color": "#37474F", "id": "G037"}, {"layer": "quality", "guna": "Tamas", "name": "Destructive anger", "color": "#37474F", "id": "G038"}, {"layer": "quality", "guna": "Tamas", "name": "Unconscious habit", "color": "#37474F", "id": "G039"}, {"layer": "life", "domain": "Āhāra — Food & Eating", "name": "Food quality", "color": "#9A8350", "id": "G040"}, {"layer": "life", "domain": "Āhāra — Food & Eating", "name": "Freshness", "color": "#9A8350", "id": "G041"}, {"layer": "life", "domain": "Āhāra — Food & Eating", "name": "Nourishment", "color": "#9A8350", "id": "G042"}, {"layer": "life", "domain": "Āhāra — Food & Eating", "name": "Intensity", "color": "#9A8350", "id": "G043"}, {"layer": "life", "domain": "Āhāra — Food & Eating", "name": "Eating awareness", "color": "#9A8350", "id": "G044"}, {"layer": "life", "domain": "Āhāra — Food & Eating", "name": "Eating motivation", "color": "#9A8350", "id": "G045"}, {"layer": "life", "domain": "Āhāra — Food & Eating", "name": "Food attachment", "color": "#9A8350", "id": "G046"}, {"layer": "life", "domain": "Āhāra — Food & Eating", "name": "Food discipline", "color": "#9A8350", "id": "G047"}, {"layer": "life", "domain": "Āhāra — Food & Eating", "name": "Food reflection", "color": "#9A8350", "id": "G048"}, {"layer": "life", "domain": "Work & Leadership", "name": "Duty", "color": "#9A8350", "id": "G049"}, {"layer": "life", "domain": "Work & Leadership", "name": "Effort", "color": "#9A8350", "id": "G050"}, {"layer": "life", "domain": "Work & Leadership", "name": "Motivation", "color": "#9A8350", "id": "G051"}, {"layer": "life", "domain": "Work & Leadership", "name": "Achievement", "color": "#9A8350", "id": "G052"}, {"layer": "life", "domain": "Work & Leadership", "name": "Recognition", "color": "#9A8350", "id": "G053"}, {"layer": "life", "domain": "Work & Leadership", "name": "Result attachment", "color": "#9A8350", "id": "G054"}, {"layer": "life", "domain": "Work & Leadership", "name": "Competition", "color": "#9A8350", "id": "G055"}, {"layer": "life", "domain": "Work & Leadership", "name": "Responsibility", "color": "#9A8350", "id": "G056"}, {"layer": "life", "domain": "Work & Leadership", "name": "Success/failure response", "color": "#9A8350", "id": "G057"}, {"layer": "life", "domain": "Relationships & Family", "name": "Listening", "color": "#9A8350", "id": "G058"}, {"layer": "life", "domain": "Relationships & Family", "name": "Compassion", "color": "#9A8350", "id": "G059"}, {"layer": "life", "domain": "Relationships & Family", "name": "Attachment", "color": "#9A8350", "id": "G060"}, {"layer": "life", "domain": "Relationships & Family", "name": "Possessiveness", "color": "#9A8350", "id": "G061"}, {"layer": "life", "domain": "Relationships & Family", "name": "Conflict", "color": "#9A8350", "id": "G062"}, {"layer": "life", "domain": "Relationships & Family", "name": "Forgiveness", "color": "#9A8350", "id": "G063"}, {"layer": "life", "domain": "Relationships & Family", "name": "Speech", "color": "#9A8350", "id": "G064"}, {"layer": "life", "domain": "Relationships & Family", "name": "Expectations", "color": "#9A8350", "id": "G065"}, {"layer": "life", "domain": "Relationships & Family", "name": "Service", "color": "#9A8350", "id": "G066"}, {"layer": "life", "domain": "Material Life", "name": "Desire", "color": "#9A8350", "id": "G067"}, {"layer": "life", "domain": "Material Life", "name": "Consumption", "color": "#9A8350", "id": "G068"}, {"layer": "life", "domain": "Material Life", "name": "Possession", "color": "#9A8350", "id": "G069"}, {"layer": "life", "domain": "Material Life", "name": "Status", "color": "#9A8350", "id": "G070"}, {"layer": "life", "domain": "Material Life", "name": "Wealth attachment", "color": "#9A8350", "id": "G071"}, {"layer": "life", "domain": "Material Life", "name": "Generosity", "color": "#9A8350", "id": "G072"}, {"layer": "life", "domain": "Material Life", "name": "Charity", "color": "#9A8350", "id": "G073"}, {"layer": "life", "domain": "Material Life", "name": "Contentment", "color": "#9A8350", "id": "G074"}, {"layer": "life", "domain": "Material Life", "name": "Simplicity", "color": "#9A8350", "id": "G075"}, {"layer": "life", "domain": "Body & Discipline", "name": "Sleep", "color": "#9A8350", "id": "G076"}, {"layer": "life", "domain": "Body & Discipline", "name": "Activity", "color": "#9A8350", "id": "G077"}, {"layer": "life", "domain": "Body & Discipline", "name": "Cleanliness", "color": "#9A8350", "id": "G078"}, {"layer": "life", "domain": "Body & Discipline", "name": "Self-control", "color": "#9A8350", "id": "G079"}, {"layer": "life", "domain": "Body & Discipline", "name": "Routine", "color": "#9A8350", "id": "G080"}, {"layer": "life", "domain": "Body & Discipline", "name": "Moderation", "color": "#9A8350", "id": "G081"}, {"layer": "life", "domain": "Body & Discipline", "name": "Comfort seeking", "color": "#9A8350", "id": "G082"}, {"layer": "life", "domain": "Body & Discipline", "name": "Discipline", "color": "#9A8350", "id": "G083"}, {"layer": "life", "domain": "Body & Discipline", "name": "Consistency", "color": "#9A8350", "id": "G084"}, {"layer": "life", "domain": "Dharma / Seva / Spiritual Practice", "name": "Duty", "color": "#9A8350", "id": "G085"}, {"layer": "life", "domain": "Dharma / Seva / Spiritual Practice", "name": "Service", "color": "#9A8350", "id": "G086"}, {"layer": "life", "domain": "Dharma / Seva / Spiritual Practice", "name": "Faith", "color": "#9A8350", "id": "G087"}, {"layer": "life", "domain": "Dharma / Seva / Spiritual Practice", "name": "Study", "color": "#9A8350", "id": "G088"}, {"layer": "life", "domain": "Dharma / Seva / Spiritual Practice", "name": "Meditation", "color": "#9A8350", "id": "G089"}, {"layer": "life", "domain": "Dharma / Seva / Spiritual Practice", "name": "Devotion", "color": "#9A8350", "id": "G090"}, {"layer": "life", "domain": "Dharma / Seva / Spiritual Practice", "name": "Surrender", "color": "#9A8350", "id": "G091"}, {"layer": "life", "domain": "Dharma / Seva / Spiritual Practice", "name": "Reflection", "color": "#9A8350", "id": "G092"}, {"layer": "life", "domain": "Dharma / Seva / Spiritual Practice", "name": "Non-attachment", "color": "#9A8350", "id": "G093"}, {"layer": "awareness", "name": "Noticing", "color": "#7651A7", "id": "G094"}, {"layer": "awareness", "name": "Naming", "color": "#7651A7", "id": "G095"}, {"layer": "awareness", "name": "Witnessing", "color": "#7651A7", "id": "G096"}, {"layer": "awareness", "name": "Pausing", "color": "#7651A7", "id": "G097"}, {"layer": "awareness", "name": "Viveka / Discernment", "color": "#7651A7", "id": "G098"}, {"layer": "awareness", "name": "Separating impulse from choice", "color": "#7651A7", "id": "G099"}, {"layer": "awareness", "name": "Conscious choice", "color": "#7651A7", "id": "G100"}, {"layer": "awareness", "name": "Right action", "color": "#7651A7", "id": "G101"}, {"layer": "awareness", "name": "Abhyāsa / Practice", "color": "#7651A7", "id": "G102"}, {"layer": "awareness", "name": "Vairāgya / Non-attachment", "color": "#7651A7", "id": "G103"}, {"layer": "awareness", "name": "Equanimity", "color": "#7651A7", "id": "G104"}, {"layer": "awareness", "name": "Sense mastery", "color": "#7651A7", "id": "G105"}, {"layer": "awareness", "name": "Steady attention", "color": "#7651A7", "id": "G106"}, {"layer": "awareness", "name": "Steady wisdom", "color": "#7651A7", "id": "G107"}, {"layer": "awareness", "name": "Sthita-prajña", "color": "#7651A7", "id": "G108"}];
+const NS="http://www.w3.org/2000/svg";
+const svg=document.getElementById("wheelSvg");
+let rotation=0,lastScores=null;
+
+function polar(r,a){const x=(a-90)*Math.PI/180;return[r*Math.cos(x),r*Math.sin(x)]}
+function sector(r1,r2,a1,a2){
+  const A=polar(r2,a1),B=polar(r2,a2),C=polar(r1,a2),D=polar(r1,a1);
+  const large=(a2-a1)>180?1:0;
+  return `M${A[0]},${A[1]}A${r2},${r2} 0 ${large} 1 ${B[0]},${B[1]}L${C[0]},${C[1]}A${r1},${r1} 0 ${large} 0 ${D[0]},${D[1]}Z`;
+}
+function label(text,r,a,size,fill="#fff"){
+  const p=polar(r,a),t=document.createElementNS(NS,"text");
+  t.setAttribute("x",p[0]);t.setAttribute("y",p[1]);t.setAttribute("text-anchor","middle");
+  t.setAttribute("font-size",size);t.setAttribute("font-weight","800");t.setAttribute("fill",fill);
+  t.setAttribute("pointer-events","none");t.textContent=text;return t;
+}
+function drawWheel(){
+  svg.innerHTML="";
+  const root=document.createElementNS(NS,"g");
+  root.setAttribute("transform",`rotate(${rotation})`);
+
+  // RING 1 — 3 GUNAS
+  const gnodes=[
+    {name:"SATTVA",color:"#d4af37"},
+    {name:"RAJAS",color:"#c62828"},
+    {name:"TAMAS",color:"#37474f"}
+  ];
+  gnodes.forEach((g,i)=>{
+    const a=i*120,b=a+120;
+    const p=document.createElementNS(NS,"path");
+    p.setAttribute("d",sector(72,116,a+1,b-1));p.setAttribute("fill",g.color);
+    p.setAttribute("stroke","#f7f1df");p.setAttribute("stroke-width",2);
+    p.classList.add("seg");p.dataset.layer="guna";p.dataset.name=g.name;
+    p.onclick=()=>show({name:g.name,layer:"guna",color:g.color});
+    root.appendChild(p);
+    root.appendChild(label(g.name,94,(a+b)/2,10,g.name==="SATTVA"?"#4a3500":"#fff"));
+  });
+
+  // RING 2 — 36 GUNA QUALITIES
+  const qualities=E.filter(x=>x.layer==="quality");
+  qualities.forEach((e,i)=>{
+    const a=i*10,b=a+10;
+    const p=document.createElementNS(NS,"path");
+    p.setAttribute("d",sector(120,198,a+.3,b-.3));p.setAttribute("fill",e.color);
+    p.setAttribute("stroke","#f7f1df");p.setAttribute("stroke-width",".7");
+    p.classList.add("seg");p.dataset.id=e.id;p.dataset.layer="quality";p.dataset.name=e.name;
+    p.onclick=()=>show(e);root.appendChild(p);
+    if(i%2===0)root.appendChild(label(e.name,159,(a+b)/2,5.1,e.guna==="Sattva"?"#4a3500":"#fff"));
+  });
+
+  // RING 3 — 54 LIFE EXPRESSIONS
+  const life=E.filter(x=>x.layer==="life");
+  life.forEach((e,i)=>{
+    const a=i*(360/54),b=(i+1)*(360/54);
+    const p=document.createElementNS(NS,"path");
+    p.setAttribute("d",sector(200,258,a+.22,b-.22));p.setAttribute("fill","#9a8350");
+    p.setAttribute("fill-opacity",".92");p.setAttribute("stroke","#f7f1df");p.setAttribute("stroke-width",".55");
+    p.classList.add("seg");p.dataset.id=e.id;p.dataset.layer="life";p.dataset.name=e.name;
+    p.onclick=()=>show(e);root.appendChild(p);
+    if(i%3===0)root.appendChild(label(e.name,229,(a+b)/2,4.2,"#fff"));
+  });
+
+  // RING 4 — 15 AWARENESS / STHITA-PRAJNA STAGES
+  const aw=E.filter(x=>x.layer==="awareness");
+  aw.forEach((e,i)=>{
+    const a=i*24,b=a+24;
+    const p=document.createElementNS(NS,"path");
+    p.setAttribute("d",sector(260,304,a+.5,b-.5));p.setAttribute("fill","#7651a7");
+    p.setAttribute("stroke","#f7f1df");p.setAttribute("stroke-width",".8");
+    p.classList.add("seg");p.dataset.id=e.id;p.dataset.layer="awareness";p.dataset.name=e.name;
+    p.onclick=()=>show(e);root.appendChild(p);
+    root.appendChild(label(e.name,282,(a+b)/2,4.3,"#fff"));
+  });
+
+  const halo=document.createElementNS(NS,"circle");
+  halo.setAttribute("r",314);halo.setAttribute("fill","none");halo.setAttribute("stroke","#f9e27d");
+  halo.setAttribute("stroke-width","1.5");halo.setAttribute("stroke-dasharray","2 7");root.appendChild(halo);
+  svg.appendChild(root);
+
+  const c=document.createElementNS(NS,"circle");
+  c.setAttribute("r",68);c.setAttribute("fill","#f7f1df");c.setAttribute("stroke","#d4af37");c.setAttribute("stroke-width",3);svg.appendChild(c);
+  svg.appendChild(label("ĀTMAN",0,-1,20,"#5a4300"));
+  svg.appendChild(label("THE WITNESS",0,12,8,"#555"));
+  applyFilter();
+}
+function show(e){
+  const type=e.layer==="quality"?"GUNA QUALITY":e.layer==="life"?"LIFE EXPRESSION":e.layer==="awareness"?"AWARENESS PATH":"GUNA";
+  const ref=e.layer==="awareness"?"Bhagavad Gita 2.54–72 / Chapter 14":
+    e.name==="Food quality"||e.name==="Freshness"||e.name==="Nourishment"?"Bhagavad Gita 17.7–10":
+    e.name==="Speech"?"Bhagavad Gita 17.15":"Bhagavad Gita Chapters 2, 3, 14, 17 or 18 depending on context";
+  document.getElementById("detail").innerHTML=
+    `<span class="badge" style="background:${e.color||"#7651a7"};color:#fff">${type}</span>
+     <h2>${e.name}</h2>${e.sa?`<div style="color:#6a1b9a;font-size:18px">${e.sa}</div>`:""}
+     <p><b>Observe</b><br>Notice this as an experience, not as your identity.</p>
+     <div class="quote"><b>Gita connection</b><br>${ref}</div>
+     <div class="practice"><b>Practice</b><br>Pause → notice → identify attachment → choose consciously.</div>
+     <p><b>Reflection</b><br>“Am I observing this, or am I becoming this?”</p>`;
+}
+function applyFilter(){
+  const q=document.getElementById("search").value.toLowerCase();
+  const f=document.getElementById("filter").value;
+  document.querySelectorAll("#wheelSvg .seg").forEach(p=>{
+    const e=E.find(x=>x.id===p.dataset.id);
+    let ok=p.dataset.name.toLowerCase().includes(q);
+    if(f==="Sattva"||f==="Rajas"||f==="Tamas")ok=ok&&(p.dataset.name.toUpperCase()===f.toUpperCase()||e?.guna===f);
+    if(f==="life")ok=ok&&p.dataset.layer==="life";
+    if(f==="awareness")ok=ok&&p.dataset.layer==="awareness";
+    p.style.opacity=ok?1:.12;
+  });
+}
+function rotate(n){rotation+=n;drawWheel()}
+function resetWheel(){rotation=0;document.getElementById("search").value="";document.getElementById("filter").value="all";drawWheel()}
+document.getElementById("search").oninput=applyFilter;
+document.getElementById("filter").onchange=applyFilter;
+drawWheel();
+
+// 36-question V4 assessment: one item per Guna quality.
+const qs=[
+["I can see a situation clearly before reacting.","s"],["I value understanding over being right.","s"],
+["I can remain peaceful when circumstances change.","s"],["I try to speak truthfully.","s"],
+["I naturally care about others.","s"],["I notice and appreciate what is already present.","s"],
+["I can admit when I am wrong.","s"],["I can wait without becoming agitated.","s"],
+["I can feel content without needing more.","s"],["I act from devotion or sincere purpose.","s"],
+["I can forgive without replaying the event.","s"],["I can maintain a steady discipline.","s"],
+["I strongly want a particular outcome.","r"],["I am driven to achieve ambitious goals.","r"],
+["I measure myself by achievements.","r"],["I compare my performance with others.","r"],
+["Praise or recognition affects my choices.","r"],["I find it difficult to remain still mentally.","r"],
+["I become attached to people or outcomes.","r"],["I want to control what I possess.","r"],
+["My sense of self depends on success or status.","r"],["I worry when progress is uncertain.","r"],
+["I act quickly before thinking through consequences.","r"],["I keep pushing even when rest would be wiser.","r"],
+["I avoid learning things that challenge my assumptions.","t"],["I feel confused about what is right even when I have information.","t"],
+["I struggle to begin necessary tasks.","t"],["I postpone important work.","t"],
+["I sleep or withdraw more than I intend to.","t"],["I delay action even when I know what to do.","t"],
+["I neglect responsibilities when they become difficult.","t"],["I feel indifferent about consequences.","t"],
+["I get caught in stories that are not grounded in facts.","t"],["I avoid situations mainly because I feel afraid.","t"],
+["My anger can become destructive.","t"],["I repeat habits without consciously choosing them.","t"]
+];
+document.getElementById("questions").innerHTML=qs.map((q,i)=>
+  `<div class="question"><b>${i+1}. ${q[0]}</b><br><input class="range assess" data-g="${q[1]}" type="range" min="1" max="5" value="3"></div>`
+).join("");
+
+function calculate(){
+  const scores={s:0,r:0,t:0},vals={s:[],r:[],t:[]};
+  document.querySelectorAll(".assess").forEach(x=>{scores[x.dataset.g]+=+x.value;vals[x.dataset.g].push(+x.value)});
+  lastScores={scores,vals};localStorage.setItem("guna108_scores",JSON.stringify(lastScores));
+  const total=scores.s+scores.r+scores.t,p=k=>Math.round(scores[k]/total*100);
+  document.getElementById("assessmentResult").innerHTML=
+    `<div class="metrics">
+      <div class="metric" style="background:#f0dc85;color:#4a3500"><b>Sattva</b><strong>${p("s")}%</strong></div>
+      <div class="metric" style="background:#c62828"><b>Rajas</b><strong>${p("r")}%</strong></div>
+      <div class="metric" style="background:#37474f"><b>Tamas</b><strong>${p("t")}%</strong></div>
+    </div>
+    <div class="practice"><b>Next:</b> Open <b>My Mandala</b>. Your 36 quality petals will reflect your answers.</div>`;
+  drawMandala();drawConflict();
+}
+function drawMandala(){
+  if(!lastScores)return;
+  const m=document.getElementById("mandalaSvg");m.innerHTML="";
+  const cols=["#d4af37","#c62828","#37474f"],vals=[lastScores.vals.s,lastScores.vals.r,lastScores.vals.t];
+  let qi=0;
+  for(let g=0;g<3;g++)for(let j=0;j<12;j++){
+    const v=vals[g][j]||3,r=78+v*24,a=qi*10,b=a+8,A=polar(70,a),B=polar(r,a),C=polar(r,b),D=polar(70,b);
+    const p=document.createElementNS(NS,"path");
+    p.setAttribute("d",`M${A[0]},${A[1]}L${B[0]},${B[1]}A${r},${r} 0 0 1 ${C[0]},${C[1]}L${D[0]},${D[1]}Z`);
+    p.setAttribute("fill",cols[g]);p.setAttribute("stroke","#f7f1df");p.setAttribute("stroke-width",1);m.appendChild(p);qi++;
+  }
+  for(let i=0;i<54;i++){const a=i*(360/54),p=polar(240,a),c=document.createElementNS(NS,"circle");c.setAttribute("cx",p[0]);c.setAttribute("cy",p[1]);c.setAttribute("r",4);c.setAttribute("fill","#9a8350");m.appendChild(c)}
+  for(let i=0;i<15;i++){const a=i*24,p=polar(300,a),c=document.createElementNS(NS,"circle");c.setAttribute("cx",p[0]);c.setAttribute("cy",p[1]);c.setAttribute("r",5);c.setAttribute("fill","#7651a7");m.appendChild(c)}
+  const c=document.createElementNS(NS,"circle");c.setAttribute("r",64);c.setAttribute("fill","#f7f1df");c.setAttribute("stroke","#d4af37");c.setAttribute("stroke-width",3);m.appendChild(c);
+  m.appendChild(label("ĀTMAN",0,-1,20,"#5a4300"));m.appendChild(label("THE WITNESS",0,12,8,"#555"));
+  document.getElementById("mandalaInfo").innerHTML=
+    `<h2>Personalized Guna Mandala</h2>
+     <p><b>Sattva:</b> ${lastScores.scores.s}/60<br><b>Rajas:</b> ${lastScores.scores.r}/60<br><b>Tamas:</b> ${lastScores.scores.t}/60</p>
+     <div class="quote">The 36 quality petals are personalized. The 54 life expressions and 15 awareness stages remain the structural context.</div>
+     <div class="practice"><b>Direction</b><br>Observe the changing patterns without turning them into identity.</div>`;
+}
+function drawConflict(){
+  if(!lastScores)return;
+  const s=lastScores.scores;let title,body;
+  if(s.s>=s.r&&s.s>=s.t){title="Sattva ↔ Rajas";body="Dharma / clarity ↔ achievement / recognition";}
+  else if(s.r>=s.t){title="Rajas ↔ Tamas";body="Desire / activity ↔ inertia / avoidance";}
+  else{title="Sattva ↔ Tamas";body="Discipline / clarity ↔ inertia / withdrawal";}
+  document.getElementById("conflictBox").innerHTML=
+    `<h3>${title}</h3><p>${body}</p><div class="quote"><b>Ask:</b> What force is pulling me right now?</div>
+     <div class="practice"><b>Choose:</b> Pause → identify attachment → act consciously → release the result.</div>`;
+}
+function saveMeal(){
+  const f=+document.getElementById("fresh").value,n=+document.getElementById("nour").value,i=+document.getElementById("intense").value,a=+document.getElementById("aware").value;
+  const msg=(f+n+a-i>=9)?"Your reflection points toward qualities described in BG 17.8: nourishment, vitality, health, happiness and satisfaction.":"Use the meal as an observation practice. Notice freshness, nourishment, intensity and awareness without food guilt.";
+  document.getElementById("mealResult").textContent=msg;
+  localStorage.setItem("guna108_meal",JSON.stringify({f,n,i,a,date:new Date().toISOString()}));
+}
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));
+  b.classList.add("active");
+  document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+  document.getElementById(b.dataset.view).classList.add("active");
+  if(b.dataset.view==="mandala"&&lastScores)drawMandala();
+});
+try{const saved=JSON.parse(localStorage.getItem("guna108_scores"));if(saved){lastScores=saved;drawMandala();drawConflict()}}catch(e){}
+</script>
+</body>
+</html>
